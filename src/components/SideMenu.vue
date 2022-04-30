@@ -11,7 +11,9 @@
 
       <div class="flex flex-row items-center hover:cursor-pointer hover:text-primary-grey">
         <SearchCircleIcon class="w-4 h-4"/>
-        <p class="ml-3">search</p>
+        <RouterLink to="/search">
+          <p class="ml-3">search</p>
+        </RouterLink>
       </div>
 
       <div class="flex flex-row items-center hover:cursor-pointer hover:text-primary-grey">
