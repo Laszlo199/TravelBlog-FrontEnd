@@ -9,4 +9,12 @@ export class AuthService {
     });
     return res.data;
   }
+
+  async login(userName: string, password: string): Promise<string> {
+    const res = await http.post("/auth/login", {
+      userName: userName,
+      password: password,
+    });
+    return res.data;
+  }
 }

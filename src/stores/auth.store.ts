@@ -7,7 +7,7 @@ const authService: AuthService = new AuthService();
 export const AuthStore = defineStore({
   id: "authStore",
   state: () => ({
-    loggedInUser: { username: "" } as User,
+    loggedInUser: { userName: "" } as User,
   }),
   getters: {
     loggedIn: (state) => {
@@ -15,14 +15,18 @@ export const AuthStore = defineStore({
       return {} as User;
     },
     userName: (state) => {
-      if (state.loggedInUser.username != undefined)
-        return state.loggedInUser.username;
+      if (state.loggedInUser.userName != undefined)
+        return state.loggedInUser.userName;
       else return "";
     },
   },
   actions: {
     registerUser(userName: string, password: string) {
       authService.register(userName, password);
+    },
+
+    loginUser(userName: string, password: string) {
+      authService.login(userName, password);
     },
   },
 });
