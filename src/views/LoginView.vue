@@ -32,7 +32,9 @@
           </button>
         </div>
         <div class="mt-6 text-center">
+          <RouterLink to="/register">
           <a href="#" class="underline">Sign up for an account</a>
+          </RouterLink>
         </div>
       </form>
     </div>
