@@ -6,39 +6,45 @@
       <h2 class="mb-12 text-center text-5xl font-extrabold">Welcome.</h2>
       <form>
         <div class="mb-4">
-          <label class="block mb-1" for="userName">User Name</label>
+          <label class="block text-md font-light mb-2" for="username"
+            >Username</label
+          >
           <input
             v-model="inputUserName"
-            id="userName"
-            type="text"
-            name="userName"
             class="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full"
+            type="text"
+            name="username"
+            id=""
           />
         </div>
         <div class="mb-4">
-          <label class="block mb-1" for="password">Password</label>
+          <label class="block text-md font-light mb-2" for="password"
+            >Password</label
+          >
           <input
             v-model="inputPassword"
-            id="password"
+            class="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full"
             type="password"
             name="password"
-            class="py-2 px-3 border border-gray-300 focus:border-red-300 focus:outline-none focus:ring focus:ring-red-200 focus:ring-opacity-50 rounded-md shadow-sm disabled:bg-gray-100 mt-1 block w-full"
+            id=""
           />
         </div>
-        <div class="mt-6 flex items-center justify-between"></div>
-        <div class="mt-6">
+
+        <div class="flex items-center justify-between mb-5">
           <button
-            @submit="loginUser"
-            class="w-full inline-flex items-center justify-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold capitalize text-white hover:bg-red-700 active:bg-red-700 focus:outline-none focus:border-red-700 focus:ring focus:ring-red-200 disabled:opacity-25 transition"
+            @click="loginUser"
+            class="w-full inline-flex items-center justify-center px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white font-light py-2 px-6 rounded focus:ring focus:ring-offset-amber-400 disabled:opacity-25 transition"
+            type="button"
           >
-            Sign In
+            Sing In
           </button>
         </div>
-        <div class="mt-6 text-center">
+        <p class="text-center text-md font-light">
+          Don't have an account?
           <RouterLink to="/register">
-            <a class="underline">Sign up for an account</a>
+            <a href="#" class="underline text-md text-indigo-600">Sing Up</a>
           </RouterLink>
-        </div>
+        </p>
       </form>
     </div>
   </div>
@@ -54,9 +60,8 @@ const inputPassword = ref("");
 const authStore = AuthStore();
 
 function loginUser() {
-  //authStore.loginUser(inputUserName.value, inputPassword.value);
-  //router.push({ path: "/search" });
-  console.log("toka");
+  authStore.loginUser(inputUserName.value, inputPassword.value);
+  router.push({ path: "/search" });
 }
 </script>
 
