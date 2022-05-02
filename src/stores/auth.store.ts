@@ -1,12 +1,14 @@
 import type { User } from "@/models/User";
 import { defineStore } from "pinia";
 import { AuthService } from "@/services/auth.service";
+import router from "@/router";
 
 const authService: AuthService = new AuthService();
 
 export const AuthStore = defineStore({
   id: "authStore",
   state: () => ({
+    token: null,
     loggedInUser: { userName: "" } as User,
   }),
   getters: {
@@ -26,7 +28,20 @@ export const AuthStore = defineStore({
     },
 
     loginUser(userName: string, password: string) {
-      authService.login(userName, password);
+      return new Promise((resolve, reject) => {
+        authService
+          .login(userName, password)
+          .then((response) => {
+            if (response) {
+              console.log(response);
+              resolve(response);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            reject(error);
+          });
+      });
     },
   },
 });

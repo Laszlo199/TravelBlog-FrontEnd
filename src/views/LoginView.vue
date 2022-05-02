@@ -54,14 +54,18 @@
 import { ref } from "vue";
 import { AuthStore } from "@/stores/auth.store";
 import router from "@/router";
+import axios from "axios";
 
 const inputUserName = ref("");
 const inputPassword = ref("");
 const authStore = AuthStore();
 
 function loginUser() {
-  authStore.loginUser(inputUserName.value, inputPassword.value);
-  router.push({ path: "/search" });
+  authStore
+    .loginUser(inputUserName.value, inputPassword.value)
+    .then((response) => {
+      router.push({ path: "/search" });
+    });
 }
 </script>
 
