@@ -30,6 +30,16 @@
           />
           <label class="error" aria-disabled="false"></label>
         </div>
+
+        <div class="pt-1 px-30">
+          <label
+            class="p-2 mb-5 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+            role="alert"
+            v-show="errorMessage"
+            >{{ message }}</label
+          >
+        </div>
+
         <div class="flex items-center justify-between mb-5">
           <button
             @click="registerUser"
@@ -59,11 +69,18 @@ const inputUserName = ref("");
 const inputPassword = ref("");
 const errors = ref("");
 const authStore = AuthStore();
+const errorMessage = ref(false);
+const message = ref("");
 
 function registerUser() {
-  if (inputPassword.value == "" && inputPassword.value == "") {
-    errors.value = "User name is empty";
+  if (inputPassword.value == "" || inputPassword.value == "") {
+    errorMessage.value = true;
+    message.value = "Password and Username are required";
+  } else if (inputPassword.value.length < 5 || inputUserName.value.length < 5) {
+    errorMessage.value = true;
+    message.value = "Password and Username have to be 5 character long";
   } else {
+    errorMessage.value = false;
     authStore.registerUser(inputUserName.value, inputPassword.value);
     router.push({ path: "/login" });
   }

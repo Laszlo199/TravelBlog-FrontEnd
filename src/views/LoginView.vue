@@ -30,9 +30,12 @@
           />
         </div>
         <div class="pt-1 px-20">
-          <label class="p-1 mb-5 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert" v-show="errorMessage">{{
-            message
-          }}</label>
+          <label
+            class="p-1 mb-5 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+            role="alert"
+            v-show="errorMessage"
+            >{{ message }}</label
+          >
         </div>
 
         <div class="flex items-center justify-between mb-5">
