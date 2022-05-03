@@ -1,7 +1,7 @@
 import type { User } from "@/models/User";
 import { defineStore } from "pinia";
 import { AuthService } from "@/services/auth.service";
-import router from "@/router";
+
 
 const authService: AuthService = new AuthService();
 
@@ -21,6 +21,10 @@ export const AuthStore = defineStore({
         return state.loggedInUser.userName;
       else return "";
     },
+    id: (state) => {
+      if (state.loggedInUser.id != undefined) return state.loggedInUser.id;
+      else return "";
+    },
   },
   actions: {
     registerUser(userName: string, password: string) {
@@ -28,6 +32,7 @@ export const AuthStore = defineStore({
     },
 
     loginUser(userName: string, password: string) {
+
       return new Promise((resolve, reject) => {
         authService
           .login(userName, password)

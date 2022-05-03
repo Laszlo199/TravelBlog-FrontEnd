@@ -28,8 +28,8 @@
             name="password"
             id=""
           />
+          <label class="error" aria-disabled="false"></label>
         </div>
-
         <div class="flex items-center justify-between mb-5">
           <button
             @click="registerUser"
@@ -57,10 +57,13 @@ import router from "@/router";
 
 const inputUserName = ref("");
 const inputPassword = ref("");
+const errors = ref("");
 const authStore = AuthStore();
 
 function registerUser() {
-  if (inputUserName.value.length > 0 && inputPassword.value.length > 0) {
+  if (inputPassword.value == "" && inputPassword.value == "") {
+    errors.value = "User name is empty";
+  } else {
     authStore.registerUser(inputUserName.value, inputPassword.value);
     router.push({ path: "/login" });
   }

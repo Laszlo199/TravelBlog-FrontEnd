@@ -29,6 +29,11 @@
             id=""
           />
         </div>
+        <div class="pt-1 px-20">
+          <label class="p-1 mb-5 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert" v-show="errorMessage">{{
+            message
+          }}</label>
+        </div>
 
         <div class="flex items-center justify-between mb-5">
           <button
@@ -39,6 +44,7 @@
             Sing In
           </button>
         </div>
+
         <p class="text-center text-md font-light">
           Don't have an account?
           <RouterLink to="/register">
@@ -54,18 +60,30 @@
 import { ref } from "vue";
 import { AuthStore } from "@/stores/auth.store";
 import router from "@/router";
-import axios from "axios";
 
 const inputUserName = ref("");
 const inputPassword = ref("");
+const errorMessage = ref(false);
+const message = ref("");
 const authStore = AuthStore();
 
 function loginUser() {
-  authStore
-    .loginUser(inputUserName.value, inputPassword.value)
-    .then((response) => {
-      router.push({ path: "/search" });
-    });
+  if (inputPassword.value == "" || inputUserName.value == "") {
+    errorMessage.value = true;
+    message.value = "Password and Username are required";
+  } else {
+    errorMessage.value = true;
+    message.value = "Password and Username are wrong";
+  }
+
+  if (inputUserName.value && inputPassword.value) {
+    errorMessage.value = false;
+    authStore
+      .loginUser(inputUserName.value, inputPassword.value)
+      .then((response) => {
+        router.push({ path: "/search" });
+      });
+  }
 }
 </script>
 
