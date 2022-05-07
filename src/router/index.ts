@@ -7,6 +7,16 @@ const router = createRouter({
       path: '/search',
       name: 'search',
       component: () => import('../views/SearchView.vue')
+    },
+    {
+      path: '/add-post',
+      name: 'add-post',
+      component: () => import('../views/AddPostView.vue')
+    },
+    {
+      path: '/my-posts',
+      name: 'my-posts',
+      component: () => import('../views/MyPostsView.vue')
     }
   ]
 })
