@@ -38,7 +38,7 @@
           >
         </div>
 
-        <div class="flex items-center justify-between mb-5">
+        <div class="flex items-center justify-between mb-5 pt-6">
           <button
             @click="loginUser"
             class="w-full inline-flex items-center justify-center px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white font-light py-2 px-6 rounded focus:ring focus:ring-offset-amber-400 disabled:opacity-25 transition"
@@ -74,17 +74,17 @@ function loginUser() {
   if (inputPassword.value == "" || inputUserName.value == "") {
     errorMessage.value = true;
     message.value = "Password and Username are required";
-  } else {
-    errorMessage.value = true;
-    message.value = "Password and Username are wrong";
-  }
-
-  if (inputUserName.value && inputPassword.value) {
+  } else if (inputUserName.value && inputPassword.value) {
     errorMessage.value = false;
     authStore
       .loginUser(inputUserName.value, inputPassword.value)
       .then((response) => {
         router.push({ path: "/search" });
+      })
+      .catch((error) => {
+        console.log(error);
+        errorMessage.value = true;
+        message.value = "Password and Username are wrong";
       });
   }
 }

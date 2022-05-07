@@ -31,7 +31,7 @@
           <label class="error" aria-disabled="false"></label>
         </div>
 
-        <div class="pt-1 px-30">
+        <div class="pt-1 px-30 pl-10">
           <label
             class="p-2 mb-5 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
             role="alert"
@@ -40,7 +40,7 @@
           >
         </div>
 
-        <div class="flex items-center justify-between mb-5">
+        <div class="flex items-center justify-between mb-5 pt-6">
           <button
             @click="registerUser"
             class="w-full inline-flex items-center justify-center px-4 py-2 bg-orange-500 hover:bg-orange-600 text-white font-light py-2 px-6 rounded focus:ring focus:ring-offset-amber-400 disabled:opacity-25 transition"
