@@ -32,7 +32,9 @@
 
       <div class="flex flex-row items-center hover:cursor-pointer hover:text-primary-grey">
         <StarIcon class="w-4 h-4"/>
-        <p class="ml-3">favourites</p>
+        <RouterLink to="/favourite-posts">
+          <p class="ml-3">favourites</p>
+        </RouterLink>
       </div>
 
       <div class="flex flex-row items-center hover:cursor-pointer hover:text-primary-grey">

@@ -10,12 +10,20 @@ export class PostService {
     });
 
     getAllPosts(id: string) {
-        return this.http.get("/posts/userId/"+id);
+        return this.http.get("/posts/own/userId/"+id);
+    }
+
+    getAllFavouritePosts(id: string) {
+        return this.http.get("/posts/liked/userId/"+id);
     }
 
     async createPost(post: CreatePostDto): Promise<any> {
         const result = await this.http.post<any>("/posts", post);
         return result.data;
+    }
+
+    async likePost(like: likePostDto) {
+        await this.http.post<any>("/posts/like", like);
     }
 
 }

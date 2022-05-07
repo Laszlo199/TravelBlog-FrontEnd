@@ -17,6 +17,11 @@ const router = createRouter({
       path: '/my-posts',
       name: 'my-posts',
       component: () => import('../views/MyPostsView.vue')
+    },
+    {
+      path: '/favourite-posts',
+      name: 'favourite-posts',
+      component: () => import('../views/FavouritesView.vue')
     }
   ]
 })

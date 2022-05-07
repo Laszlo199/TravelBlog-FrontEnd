@@ -1,4 +1,5 @@
 export interface GetPostDto {
+    id: string,
     username: string;
     title: string;
     description: string;
