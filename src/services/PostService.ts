@@ -1,5 +1,6 @@
 import axios from "axios";
 import type {CreatePostDto} from "@/Dtos/create.post.dto";
+import type {LikePostDto} from "@/Dtos/like.post.dto";
 
 export class PostService {
     http = axios.create({
@@ -22,7 +23,7 @@ export class PostService {
         return result.data;
     }
 
-    async likePost(like: likePostDto) {
+    async likePost(like: LikePostDto) {
         await this.http.post<any>("/posts/like", like);
     }
 

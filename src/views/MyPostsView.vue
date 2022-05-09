@@ -13,7 +13,7 @@
 
     <div class="mt-8 flex flex-col space-y-6 overflow-scroll">
       <div v-for="post in posts">
-        <Post :the-post="post" :view-type="'MYPOSTS'" />
+        <Post :the-post="post" :view-type="'MYPOSTS'" @refresh="updateView"/>
       </div>
 
     </div>
@@ -33,13 +33,19 @@ const posts = ref([]);
 const searchInput = ref('');
 
 postService?.getAllPosts(userId)
-    .then((result) => {posts.value = result.data; console.log(posts.value);})
+    .then((result) => {posts.value = result.data;})
     .catch((error)=>console.log("error: "+error))
 
 const filteredPosts = computed(()=> {
   return posts.value.filter(post => post.title.toLowerCase().includes(searchInput.value.toLowerCase())
       || post.description.toLowerCase().includes(searchInput.value.toLowerCase()));
 });
+
+function updateView() {
+  postService?.getAllPosts(userId)
+      .then((result) => {posts.value = result.data;})
+      .catch((error)=>console.log("error: "+error))
+}
 
 </script>
 
