@@ -67,7 +67,6 @@ import router from "@/router";
 
 const inputUserName = ref("");
 const inputPassword = ref("");
-const errors = ref("");
 const authStore = AuthStore();
 const errorMessage = ref(false);
 const message = ref("");
@@ -82,7 +81,7 @@ function registerUser() {
   } else {
     errorMessage.value = false;
     authStore.registerUser(inputUserName.value, inputPassword.value);
-    router.push({ path: "/login" });
+    router.push({ path: "/search" });
   }
 }
 </script>

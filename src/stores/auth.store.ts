@@ -1,15 +1,17 @@
 import type { User } from "@/models/User";
 import { defineStore } from "pinia";
 import { AuthService } from "@/services/auth.service";
-
+import type { Token } from "@/models/Token";
 
 const authService: AuthService = new AuthService();
+const userId = "userId";
+const name = "name";
+const token = "Token";
 
 export const AuthStore = defineStore({
   id: "authStore",
   state: () => ({
-    token: null,
-    loggedInUser: { userName: "" } as User,
+    loggedInUser: { user: "" } as Token,
   }),
   getters: {
     loggedIn: (state) => {
@@ -17,13 +19,12 @@ export const AuthStore = defineStore({
       return {} as User;
     },
     userName: (state) => {
-      if (state.loggedInUser.userName != undefined)
-        return state.loggedInUser.userName;
+      if (state.loggedInUser.user != undefined) return state.loggedInUser.user;
       else return "";
     },
-    id: (state) => {
-      if (state.loggedInUser.id != undefined) return state.loggedInUser.id;
-      else return "";
+    getUserid: (state) => {
+      if (state.loggedInUser != undefined) return state.loggedInUser.user;
+      else return -1;
     },
   },
   actions: {
@@ -32,13 +33,16 @@ export const AuthStore = defineStore({
     },
 
     loginUser(userName: string, password: string) {
-
       return new Promise((resolve, reject) => {
         authService
           .login(userName, password)
           .then((response) => {
             if (response) {
+              this.loggedInUser = response;
               console.log(response);
+              localStorage.setItem(name, userName);
+              localStorage.setItem(userId, this.loggedInUser.user);
+              localStorage.setItem(token, this.loggedInUser.token);
               resolve(response);
             }
           })
