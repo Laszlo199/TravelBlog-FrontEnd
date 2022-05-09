@@ -1,4 +1,3 @@
-import type { User } from "@/models/User";
 import { defineStore } from "pinia";
 import { AuthService } from "@/services/auth.service";
 import type { Token } from "@/models/Token";
@@ -8,15 +7,16 @@ const userId = "userId";
 const name = "name";
 const token = "Token";
 
+
 export const AuthStore = defineStore({
   id: "authStore",
   state: () => ({
-    loggedInUser: { user: "" } as Token,
+    loggedInUser: { token: "" } as Token,
   }),
   getters: {
     loggedIn: (state) => {
       if (state.loggedInUser != undefined) return state.loggedInUser;
-      return {} as User;
+      return {} as Token;
     },
     userName: (state) => {
       if (state.loggedInUser.user != undefined) return state.loggedInUser.user;
@@ -43,6 +43,7 @@ export const AuthStore = defineStore({
               localStorage.setItem(name, userName);
               localStorage.setItem(userId, this.loggedInUser.user);
               localStorage.setItem(token, this.loggedInUser.token);
+              console.log(this.loggedIn);
               resolve(response);
             }
           })
