@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-screen w-800 mx-auto justify-center">
+  <div class="flex flex-col h-screen w-800 mx-auto">
     <h1 class="text-4xl text-primary-orange font-bold mt-20 mb-4">Search</h1>
 
     <div class="flex flex-row space-x-8">
@@ -17,9 +17,9 @@
     </div>
 
     <div class="mt-8 flex flex-col space-y-6 overflow-scroll">
-      <Post />
-      <Post />
-      <Post />
+      <!--TODO CHANGE FOR ACTUAL SEARCH RESULTS-->
+      <Post :the-post="testPost" :view-type="SEARCHPOSTS"/>
+      <Post :the-post="testPost" :view-type="SEARCHPOSTS"/>
     </div>
   </div>
 
@@ -28,6 +28,20 @@
 <script setup lang="ts">
 import {SearchIcon, LocationMarkerIcon} from "@heroicons/vue/outline";
 import Post from "@/components/Post.vue";
+import type {GetPostDto} from "@/Dtos/get.post.dto";
+
+const testPost: GetPostDto = {
+  username: 'string',
+  title: 'string',
+  description: 'string',
+  text: 'string',
+  isPrivate: false,
+  location: 'string',
+  date: Date.now(),
+  likes: 12,
+  dislikes: 2,
+  comments: []
+}
 
 </script>
 

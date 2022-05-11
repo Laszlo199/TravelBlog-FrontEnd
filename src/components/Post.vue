@@ -7,7 +7,15 @@
         <LocationMarkerIcon class="w-4 h-4 stroke-primary-grey stroke-2" />
         <p class="text-sm text-primary-grey font-medium">{{ location }}</p>
       </div>
-      <p class="text-sm text-primary-grey font-medium">{{ date }}</p>
+      <p class="text-sm text-primary-grey font-medium whitespace-nowrap">{{ date }}</p>
+
+      <div v-if="viewType=='MYPOSTS'" class="w-full flex flex-row justify-between">
+        <p class="text-sm text-primary-orange">{{ isPrivate ? 'private' : 'public' }}</p>
+        <div class="flex flex-row space-x-2">
+          <PencilAltIcon @click="editPost()" class="w-6 h-6 stroke-primary-grey stroke-2 cursor-pointer hover:stroke-black" />
+          <TrashIcon @click="deletePost()" class="w-6 h-6 stroke-primary-grey stroke-2 cursor-pointer hover:stroke-black" />
+        </div>
+      </div>
     </div>
 
     <!--CONTENT-->
@@ -15,7 +23,8 @@
       <div class="w-2/8 h-full bg-primary-orange">img</div>
       <div class="w-5/8 flex flex-col space-y-2 ml-2">
         <h2 class="text-black text-xl font-bold">{{ header }}</h2>
-        <p class="text-base text-black post-text-wrap">{{ text }}</p>
+        <p v-if="description.length>0" class="text-base text-black">{{ description }}</p>
+        <p v-if="description.length<200" class="text-base text-black post-text-wrap">{{ text }}</p>
         <p class="text-base text-medium text-primary-orange font-medium cursor-pointer">Read more</p>
       </div>
     </div>
@@ -60,7 +69,7 @@
       </div>
     </div>
 
-    <!--COMMENTS-->
+    <!--COMMENTS TODO implement actual comments-->
     <Comment/>
     <Comment/>
   </div>
@@ -68,17 +77,29 @@
 </template>
 
 <script setup lang="ts">
-import {LocationMarkerIcon, HeartIcon, AnnotationIcon, ThumbDownIcon, ThumbUpIcon} from "@heroicons/vue/outline";
+import {LocationMarkerIcon, HeartIcon, AnnotationIcon, ThumbDownIcon, ThumbUpIcon, TrashIcon, PencilAltIcon} from "@heroicons/vue/outline";
 import Comment from "@/components/Comment.vue";
-import {computed, ref} from "vue";
+import {computed, ref, toRefs} from "vue";
+import type {GetPostDto} from "@/Dtos/get.post.dto";
 
-const username = 'johny334';
-const location = 'Rome, Italy';
-const date = '20/03/2020';
-const header = 'Best donuts ever';
-const text = 'Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptate'
-const likes = 12;
-const dislikes = 3;
+
+const props = defineProps<{
+  thePost:GetPostDto
+  viewType:string
+}>();
+
+const username = ref(props.thePost.username);
+const location = ref(props.thePost.location);
+const date = ref(props.thePost.date);
+const isPrivate = ref(props.thePost.isPrivate);
+const header = ref(props.thePost.title);
+const description = ref(props.thePost.description);
+const text = ref(props.thePost.text);
+const likes = ref(props.thePost.likes);
+const dislikes = ref(props.thePost.dislikes);
+
+//depending on the view type (my posts / search posts) we get different elements in post component
+const viewType = ref(props.viewType);
 
 const newComment = ref("");
 const isCommentPanelOpen = ref(false);
@@ -91,6 +112,14 @@ function submitComment() {
   //TODO implement create comment
 }
 
+function editPost() {
+  //TODO implement edit post
+}
+
+function deletePost() {
+  //TODO implement delete posts
+}
+
 </script>
 
 <style scoped>
@@ -99,7 +128,7 @@ function submitComment() {
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 3; /* number of lines to show */
+  -webkit-line-clamp: 2; /* number of lines to show */
   -webkit-box-orient: vertical;
 }
 </style>

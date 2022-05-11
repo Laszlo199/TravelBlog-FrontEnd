@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import SideMenu from "@/components/SideMenu.vue";
 import {useRouter} from "vue-router";
+import {provide} from "vue";
+import {PostService} from "@/services/PostService";
 const myRouter: any = useRouter();
+provide("postService", new PostService());
 
 </script>
 

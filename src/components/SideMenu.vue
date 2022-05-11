@@ -18,12 +18,16 @@
 
       <div class="flex flex-row items-center hover:cursor-pointer hover:text-primary-grey">
         <PlusCircleIcon class="w-4 h-4"/>
-        <p class="ml-3">add post</p>
+        <RouterLink to="/add-post">
+          <p class="ml-3">add post</p>
+        </RouterLink>
       </div>
 
       <div class="flex flex-row items-center hover:cursor-pointer hover:text-primary-grey">
         <CollectionIcon class="w-4 h-4"/>
-        <p class="ml-3">my posts</p>
+        <RouterLink to="/my-posts">
+          <p class="ml-3">my posts</p>
+        </RouterLink>
       </div>
 
       <div class="flex flex-row items-center hover:cursor-pointer hover:text-primary-grey">
