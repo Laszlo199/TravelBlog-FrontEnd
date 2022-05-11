@@ -31,7 +31,7 @@
       </div>
 
       <div class="flex flex-row items-center hover:cursor-pointer hover:text-primary-grey">
-        <StarIcon class="w-4 h-4"/>
+        <HeartIcon class="w-4 h-4"/>
         <RouterLink to="/favourite-posts">
           <p class="ml-3">favourites</p>
         </RouterLink>
@@ -55,7 +55,7 @@
 </template>
 
 <script setup lang="ts">
-import {SearchCircleIcon, PlusCircleIcon, CollectionIcon, StarIcon, BellIcon, CogIcon} from "@heroicons/vue/outline";
+import {SearchCircleIcon, PlusCircleIcon, CollectionIcon, HeartIcon, BellIcon, CogIcon} from "@heroicons/vue/outline";
 
 </script>
 

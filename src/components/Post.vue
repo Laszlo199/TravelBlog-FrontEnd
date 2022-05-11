@@ -64,14 +64,18 @@
       </div>
 
       <div class="flex flex-row space-x-2 items-center">
-        <button @click="submitComment()" class="bg-primary-orange text-white py-1 px-2 text-sm h-3/4">send</button>
+        <button @click="submitComment(thePost.id);" class="bg-primary-orange text-white py-1 px-2 text-sm h-3/4">send</button>
         <button @click="isCommentPanelOpen=false; newComment=''; " class="bg-primary-grey text-white py-1 px-2 text-sm h-3/4">cancel</button>
       </div>
     </div>
 
-    <!--COMMENTS TODO implement actual comments-->
-    <Comment/>
-    <Comment/>
+    <!--COMMENTS-->
+    <div class="w-full max-h-36 overflow-y-auto">
+      <div v-for="comment in thePost.comments">
+        <Comment :the-comment="comment"/>
+      </div>
+    </div>
+
   </div>
 
 </template>
@@ -82,7 +86,9 @@ import Comment from "@/components/Comment.vue";
 import {computed, inject, ref, toRefs} from "vue";
 import type {GetPostDto} from "@/Dtos/get.post.dto";
 import {PostService} from "@/services/PostService";
+import {CommentService} from "@/services/CommentService";
 
+const commentService = inject<CommentService>("commentService");
 const postService = inject<PostService>("postService");
 const userId = "626ed3f991384128af52ad1b"; //TODO get actual user id when login implemented
 
@@ -93,6 +99,8 @@ const props = defineProps<{
   viewType:string
 }>();
 
+const emit = defineEmits(['refresh'])
+
 const newComment = ref("");
 const isCommentPanelOpen = ref(false);
 const todaysDate = computed( () => {
@@ -100,8 +108,21 @@ const todaysDate = computed( () => {
   return now.toLocaleDateString();
 });
 
-function submitComment() {
-  //TODO implement create comment
+function submitComment(postId) {
+  commentService?.createComment({
+    userId: userId,
+    postId: postId,
+    date: new Date(),
+    text: newComment.value
+  }).then((result) => {
+    if(result==true) {
+      isCommentPanelOpen.value=false;
+      newComment.value='';
+      emit('refresh');
+    }
+  }).catch((error) => {
+    console.log('error: ' + error)
+  });
 }
 
 function editPost() {

@@ -3,8 +3,10 @@ import SideMenu from "@/components/SideMenu.vue";
 import {useRouter} from "vue-router";
 import {provide} from "vue";
 import {PostService} from "@/services/PostService";
+import {CommentService} from "@/services/CommentService";
 const myRouter: any = useRouter();
 provide("postService", new PostService());
+provide("commentService", new CommentService());
 
 </script>
 
