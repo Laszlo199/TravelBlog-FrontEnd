@@ -41,7 +41,6 @@
           <p class="text-base">comment</p>
         </div>
       </div>
-
       <!--LIKES-->
       <div class="flex flex-row space-x-2 items-center">
         <ThumbUpIcon class="w-5 h-5 stroke-primary-grey cursor-pointer"/>
