@@ -7,7 +7,7 @@
         <LocationMarkerIcon class="w-4 h-4 stroke-primary-grey stroke-2" />
         <p class="text-sm text-primary-grey font-medium">{{ thePost.location }}</p>
       </div>
-      <p class="text-sm text-primary-grey font-medium whitespace-nowrap">{{ thePost.date }}</p>
+      <p class="text-sm text-primary-grey font-medium whitespace-nowrap">{{ postDate }}</p>
 
       <div v-if="viewType=='MYPOSTS'" class="w-full flex flex-row justify-between">
         <p class="text-sm text-primary-orange">{{ thePost.isPrivate ? 'private' : 'public' }}</p>
@@ -60,7 +60,8 @@
           <p class="text-primary-grey">{{ todaysDate }}</p>
         </div>
 
-        <input v-model="newComment" placeholder="Type your comment here..." class="text-sm text-black focus:outline-none w-full" />
+        <input type="text" v-model="newComment" placeholder="Type your comment here..."
+               class="text-sm text-black focus:outline-none w-full" />
       </div>
 
       <div class="flex flex-row space-x-2 items-center">
@@ -71,7 +72,7 @@
 
     <!--COMMENTS-->
     <div class="w-full max-h-36 overflow-y-auto">
-      <div v-for="comment in thePost.comments">
+      <div v-for="comment in _.sortBy(thePost.comments,['date']).reverse()">
         <Comment :the-comment="comment"/>
       </div>
     </div>
@@ -87,6 +88,8 @@ import {computed, inject, ref, toRefs} from "vue";
 import type {GetPostDto} from "@/Dtos/get.post.dto";
 import {PostService} from "@/services/PostService";
 import {CommentService} from "@/services/CommentService";
+import moment from "moment";
+import * as _ from "underscore";
 
 const commentService = inject<CommentService>("commentService");
 const postService = inject<PostService>("postService");
@@ -108,7 +111,11 @@ const todaysDate = computed( () => {
   return now.toLocaleDateString();
 });
 
-function submitComment(postId) {
+const postDate = computed( () => {
+  return moment(String(props.thePost.date)).format('DD/MM/YYYY');
+});
+
+function submitComment(postId: string) {
   commentService?.createComment({
     userId: userId,
     postId: postId,
