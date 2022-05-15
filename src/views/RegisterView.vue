@@ -81,7 +81,7 @@ function registerUser() {
   } else {
     errorMessage.value = false;
     authStore.registerUser(inputUserName.value, inputPassword.value);
-    router.push({ path: "/search" });
+    router.push({ path: "/login" });
   }
 }
 </script>
