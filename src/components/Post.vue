@@ -24,7 +24,7 @@
       <div class="w-5/8 flex flex-col space-y-2 ml-2">
         <h2 class="text-black text-xl font-bold">{{ thePost.title }}</h2>
         <p v-if="thePost.description.length>0" class="text-base text-black">{{ thePost.description }}</p>
-        <p v-if="thePost.description.length<200" class="text-base text-black post-text-wrap">{{ thePost.text }}</p>
+        <p v-if="thePost.description.length<200" class="text-base text-black post-text-wrap italic">{{ thePost.text }}</p>
         <p class="text-base text-medium text-primary-orange font-medium cursor-pointer">Read more</p>
       </div>
     </div>

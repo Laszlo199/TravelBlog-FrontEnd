@@ -54,30 +54,36 @@ if(sortType.value=='date_asc')
     return _.sortBy(posts.value,['date'])
         .filter((post: GetPostDto) => post.title.toLowerCase().includes(searchInput.value.toLowerCase())
       || post.description.toLowerCase().includes(searchInput.value.toLowerCase())
-      || post.username.toLowerCase().includes(searchInput.value.toLowerCase()));
+      || post.username.toLowerCase().includes(searchInput.value.toLowerCase())
+      || post.location.toLowerCase().includes(searchInput.value.toLowerCase()));
 
  else if(sortType.value=='date_desc')
     return _.sortBy(posts.value,['date'])
         .filter((post: GetPostDto) => post.title.toLowerCase().includes(searchInput.value.toLowerCase())
             || post.description.toLowerCase().includes(searchInput.value.toLowerCase())
-            || post.username.toLowerCase().includes(searchInput.value.toLowerCase()))
+            || post.username.toLowerCase().includes(searchInput.value.toLowerCase())
+            || post.location.toLowerCase().includes(searchInput.value.toLowerCase()))
         .reverse();
 
 else if(sortType.value=='title_asc')
   return _.sortBy(posts.value,function (post: GetPostDto) { return post.title.toLowerCase(); })
       .filter((post: GetPostDto) => post.title.toLowerCase().includes(searchInput.value.toLowerCase())
           || post.description.toLowerCase().includes(searchInput.value.toLowerCase())
-          || post.username.toLowerCase().includes(searchInput.value.toLowerCase()));
+          || post.username.toLowerCase().includes(searchInput.value.toLowerCase())
+          || post.location.toLowerCase().includes(searchInput.value.toLowerCase()));
 
 else if(sortType.value=='title_desc')
   return _.sortBy(posts.value,function (post: GetPostDto) { return post.title.toLowerCase(); })
       .filter((post: GetPostDto) => post.title.toLowerCase().includes(searchInput.value.toLowerCase())
           || post.description.toLowerCase().includes(searchInput.value.toLowerCase())
-          || post.username.toLowerCase().includes(searchInput.value.toLowerCase()))
+          || post.username.toLowerCase().includes(searchInput.value.toLowerCase())
+          || post.location.toLowerCase().includes(searchInput.value.toLowerCase()))
       .reverse();
 
   return posts.value.filter((post: GetPostDto) => post.title.toLowerCase().includes(searchInput.value.toLowerCase())
-      || post.description.toLowerCase().includes(searchInput.value.toLowerCase()));
+      || post.description.toLowerCase().includes(searchInput.value.toLowerCase())
+      || post.location.toLowerCase().includes(searchInput.value.toLowerCase())
+      || post.username.toLowerCase().includes(searchInput.value.toLowerCase()));
 });
 
 function updateView() {
