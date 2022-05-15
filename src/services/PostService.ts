@@ -1,7 +1,6 @@
 import axios from "axios";
 import type {CreatePostDto} from "@/Dtos/create.post.dto";
 import type {LikePostDto} from "@/Dtos/like.post.dto";
-import type { GetPostDto } from "@/Dtos/get.post.dto";
 
 export class PostService {
     http = axios.create({

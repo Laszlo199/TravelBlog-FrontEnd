@@ -7,7 +7,7 @@ export interface GetPostDto {
     isPrivate: boolean;
     location: string;
     date: Date;
-    photo: BufferSource;
+    photo: ArrayBuffer;
     likes: number;
     dislikes: number;
     comments: any[];

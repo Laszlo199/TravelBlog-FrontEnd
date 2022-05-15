@@ -20,7 +20,8 @@
 
     <!--CONTENT-->
     <div class="flex flex-row w-full border-b-2 border-primary-grey/20 mt-2 pb-2 px-2">
-      <div class="w-2/8 h-full bg-primary-orange">img</div>
+      <img v-if="imgSource != ''" :src="imgSource"
+          class="w-2/8 h-full"/>
       <div class="w-5/8 flex flex-col space-y-2 ml-2">
         <h2 class="text-black text-xl font-bold">{{ thePost.title }}</h2>
         <p v-if="thePost.description.length>0" class="text-base text-black">{{ thePost.description }}</p>
@@ -107,6 +108,11 @@ const todaysDate = computed( () => {
   const now = new Date();
   return now.toLocaleDateString();
 });
+
+const base64String = (props.thePost.photo && props.thePost.photo.data) ?
+    btoa(String.fromCharCode(...new Uint8Array(props.thePost.photo.data))) : '';
+const data_url = (base64String!='') ? "data:image/png;base64," + base64String : '';
+const imgSource = ref(data_url);
 
 function submitComment(postId) {
   commentService?.createComment({
