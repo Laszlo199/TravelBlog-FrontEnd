@@ -1,18 +1,42 @@
 <template>
   <!-- content wrapper  -->
   <div
-    class="flex flex-row h-20 w-full mx-auto bg-white shadow-md overflow-hidden m-5"
+    class="flex flex-row h-24 w-full mx-auto bg-white shadow-md overflow-hidden m-5"
   >
+
+    <!-- info 1    -->
     <div class="grow">
-      <div class="flex flex-row">
-        <div class="pr-2">
-          <p class="">smiley77 wrote</p>
+      <div class="flex flex-row mt-2 ml-2 ">
+        <div class="pr-2 font-bold">
+          <p class="">New comment for</p>
+        </div>
+
+        <div class="text-primary-orange font-bold">
+          <p>Best donuts ever</p>
+        </div>
+      </div>
+
+      <div class="flex flex-row mt-2 ml-2 text-sm">
+        <div class="pr-2 ">
+          <p class="">Smiley 77 wrote</p>
         </div>
 
         <div class="">
-          <p>"I need to try it"</p>
+          <p>"I need to try it!"</p>
         </div>
       </div>
+
+      <div class="flex flex-row mt-2 ml-2 text-xs text-zinc-400">
+        <div class="">
+          <p class="">15th March, 09:32</p>
+        </div>
+
+      </div>
+
+
+
+
+
 
       <!--      <div class="">
         <p class="pr-2">smiley77 wrote</p> <p class="">"I need to try it"</p>
