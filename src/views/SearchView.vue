@@ -60,15 +60,22 @@ postService
   .catch((error) => console.log("err: " + error));
 
 function filteredList(input: string) {
-  const result = posts.value.filter((p) => p.title.includes(input) || p.description.includes(input) || p.text.includes(input));
+  const result = posts.value.filter(
+    (p) =>
+      p.title.toLowerCase().includes(input.toLowerCase()) ||
+      p.description.toLowerCase().includes(input.toLowerCase()) ||
+      p.text.toLowerCase().includes(input.toLowerCase())
+  );
 
   if (input.length === 0) {
     return updateView();
   }
   return result;
 }
-function searchByLocation(input: string){
-  const result = posts.value.filter((p) => p.location.includes(input));
+function searchByLocation(input: string) {
+  const result = posts.value.filter((p) =>
+    p.location.toLowerCase().includes(input.toLowerCase())
+  );
 
   if (input.length === 0) {
     return updateView();
