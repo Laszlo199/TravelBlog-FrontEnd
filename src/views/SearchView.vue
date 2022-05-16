@@ -11,7 +11,6 @@
           placeholder="Search by keyword..."
           v-model="search"
           @keyup="posts = filteredList(search)"
-          @refresh="updateView"
         />
         <SearchIcon class="w-5 h-5 stroke-primary-grey" />
       </div>
@@ -22,6 +21,8 @@
         <input
           class="placeholder:text-primary-grey text-black text-sm w-full focus:outline-none"
           placeholder="Location..."
+          v-model="location"
+          @keyup="posts = searchByLocation(location)"
         />
         <LocationMarkerIcon class="w-5 h-5 stroke-primary-grey" />
       </div>
@@ -49,6 +50,7 @@ import type { GetPostDto } from "@/Dtos/get.post.dto";
 const postService = inject<PostService>("postService");
 let posts = ref([] as GetPostDto[]);
 const search = ref("");
+const location = ref("");
 
 postService
   ?.getAllPostNoId()
@@ -59,6 +61,14 @@ postService
 
 function filteredList(input: string) {
   const result = posts.value.filter((p) => p.title.includes(input) || p.description.includes(input) || p.text.includes(input));
+
+  if (input.length === 0) {
+    return updateView();
+  }
+  return result;
+}
+function searchByLocation(input: string){
+  const result = posts.value.filter((p) => p.location.includes(input));
 
   if (input.length === 0) {
     return updateView();
