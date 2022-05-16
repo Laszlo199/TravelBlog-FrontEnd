@@ -58,7 +58,7 @@ postService
   .catch((error) => console.log("err: " + error));
 
 function filteredList(input: string) {
-  const result = posts.value.filter((p) => p.title.includes(input));
+  const result = posts.value.filter((p) => p.title.includes(input) || p.description.includes(input) || p.text.includes(input));
 
   if (input.length === 0) {
     return updateView();
