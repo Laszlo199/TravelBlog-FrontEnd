@@ -9,6 +9,9 @@
         <input
           class="placeholder:text-primary-grey text-black text-sm w-full focus:outline-none"
           placeholder="Search by keyword..."
+          v-model="search"
+          @keyup="posts = filteredList(search)"
+          @refresh="updateView"
         />
         <SearchIcon class="w-5 h-5 stroke-primary-grey" />
       </div>
@@ -26,7 +29,11 @@
 
     <div class="mt-8 flex flex-col space-y-6 overflow-scroll">
       <div v-for="post in posts">
-        <Post :the-post="post" :view-type="'SEARCHPOSTS'" @refresh="updateView"/>
+        <Post
+          :the-post="post"
+          :view-type="'SEARCHPOSTS'"
+          @refresh="updateView"
+        />
       </div>
     </div>
   </div>
@@ -37,9 +44,11 @@ import { SearchIcon, LocationMarkerIcon } from "@heroicons/vue/outline";
 import Post from "@/components/Post.vue";
 import { inject, ref } from "vue";
 import { PostService } from "@/services/PostService";
+import type { GetPostDto } from "@/Dtos/get.post.dto";
 
 const postService = inject<PostService>("postService");
-const posts = ref([]);
+let posts = ref([] as GetPostDto[]);
+const search = ref("");
 
 postService
   ?.getAllPostNoId()
@@ -47,6 +56,15 @@ postService
     posts.value = result.data;
   })
   .catch((error) => console.log("err: " + error));
+
+function filteredList(input: string) {
+  const result = posts.value.filter((p) => p.title.includes(input));
+
+  if (input.length === 0) {
+    return posts;
+  }
+  return result;
+}
 </script>
 
 <style scoped></style>
