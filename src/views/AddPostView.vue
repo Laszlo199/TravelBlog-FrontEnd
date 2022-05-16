@@ -8,25 +8,32 @@
         type="checkbox"
         class="checked:bg-primary-orange"
         v-model="isPrivate"
-        :disabled="isCreated"/>
+        :disabled="isCreated"
+      />
       <p>private</p>
     </div>
 
     <!--INPUTS -->
     <div class="flex flex-row space-x-4 mb-4">
-      <div class="w-1/2 py-2 px-4 bg-white flex flex-row items-center justify-between">
+      <div
+        class="w-1/2 py-2 px-4 bg-white flex flex-row items-center justify-between"
+      >
         <input
           class="w-full placeholder:text-primary-grey text-black text-sm font-medium w-full focus:outline-none"
           placeholder="Title"
           v-model="title"
-          :disabled="isCreated"/>
+          :disabled="isCreated"
+        />
       </div>
 
-      <div class="w-1/2 py-2 px-4 bg-white flex flex-row items-center justify-between">
+      <div
+        class="w-1/2 py-2 px-4 bg-white flex flex-row items-center justify-between"
+      >
         <input
           class="placeholder:text-primary-grey text-black text-sm w-full font-medium focus:outline-none"
           placeholder="Location..."
-          v-model="location"/>
+          v-model="location"
+        />
         <LocationMarkerIcon class="w-5 h-5 stroke-primary-grey" />
       </div>
     </div>
@@ -36,7 +43,8 @@
         class="placeholder:text-primary-grey text-black text-sm w-full focus:outline-none"
         placeholder="Description (optional)"
         v-model="description"
-        :disabled="isCreated"/>
+        :disabled="isCreated"
+      />
     </div>
 
     <div class="w-full h-48 mb-4 py-2 px-4 bg-white">
@@ -44,13 +52,15 @@
         class="placeholder:text-primary-grey text-black text-sm w-full h-full focus:outline-none"
         placeholder="Write here..."
         v-model="text"
-        :disabled="isCreated"></textarea>
+        :disabled="isCreated"
+      ></textarea>
     </div>
 
     <button
       @click="submitPost()"
       :disabled="isCreated"
-      class="bg-primary-orange text-white py-1 px-2 text-base mb-4">
+      class="bg-primary-orange text-white py-1 px-2 text-base mb-4"
+    >
       send
     </button>
 
@@ -80,7 +90,11 @@ const location = ref("");
 const isCreated = ref(false);
 
 function submitPost() {
-  if (title.value.length > 2 && text.value.length > 2 && location.value.length > 2) {
+  if (
+    title.value.length > 2 &&
+    text.value.length > 2 &&
+    location.value.length > 2
+  ) {
     postService
       ?.createPost({
         userId: userId,

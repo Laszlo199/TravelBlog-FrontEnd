@@ -1,5 +1,5 @@
 export interface GetCommentDto {
-    username: string;
-    date: Date;
-    text: string;
+  username: string;
+  date: Date;
+  text: string;
 }
