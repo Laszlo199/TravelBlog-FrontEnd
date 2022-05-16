@@ -61,9 +61,18 @@ function filteredList(input: string) {
   const result = posts.value.filter((p) => p.title.includes(input));
 
   if (input.length === 0) {
-    return posts;
+    return updateView();
   }
   return result;
+}
+
+function updateView() {
+  postService
+    ?.getAllPostNoId()
+    .then((result) => {
+      posts.value = result.data;
+    })
+    .catch((error) => console.log("err: " + error));
 }
 </script>
 
