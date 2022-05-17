@@ -29,39 +29,6 @@ pipeline{
                         sh "echo 'Building frontend failed'"
                     }
                 }
-              }
-
-              stage("test"){
-                steps{
-                    sh "echo 'some tests'" // to add later
-                }
-              }
-              stage("Clean container"){
-                steps{
-                    script{
-                        try{
-                            sh "docker-compose down"
-                        }finally{ }
-                    }
-
-                }
-              }
-
-             stage("Deploy") {
-                       steps{
-                           sh "docker-compose up -d"
-                       }
-                        post{
-                            always {
-                                sh "echo 'deploying frontend finished'"
-                            }
-                            success {
-                                sh "echo 'deploying frontend succeeded'"
-                            }
-                            failure {
-                                sh "echo 'deploying frontend failed'"
-                            }
-                     }
-             }
+           }
      }
 }
