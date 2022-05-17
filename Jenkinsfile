@@ -11,10 +11,9 @@ pipeline{
      stages{
            stage("build"){
                 steps{
-                    dir("src") {
-                        sh "npm install"
-                        sh "npm i @vue/cli-service"
-                        sh "npm run build "
+                    dir("TravelBlog-FrontEnd") {
+
+                      sh "npm run build "
 
                     }
                 }
