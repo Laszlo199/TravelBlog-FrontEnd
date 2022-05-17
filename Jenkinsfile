@@ -18,17 +18,7 @@ pipeline{
 
                     }
                 }
-                post{
-                    always {
-                        sh "echo 'Building frontend finished'"
-                    }
-                    success {
-                        sh "echo 'Building frontend succeeded'"
-                    }
-                    failure {
-                        sh "echo 'Building frontend failed'"
-                    }
-                }
+             
            }
      }
 }
