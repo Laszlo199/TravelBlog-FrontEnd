@@ -12,11 +12,11 @@ pipeline{
            stage("build"){
                 steps{
                     dir("TravelBlog-FrontEnd") {
-                        sh "npm update"
-                        sh "ng build --prod"
+                        sh "npm install"
+                        sh "npm i @vue/cli-service"
+                        sh "npm run build "
 
                     }
-                    sh "docker-compose --env-file Config/Test.env build web"
                 }
                 post{
                     always {
@@ -40,7 +40,7 @@ pipeline{
                 steps{
                     script{
                         try{
-                            sh "docker-compose --env-file Config/Test.env down"
+                            sh "docker-compose down"
                         }finally{ }
                     }
 
@@ -49,7 +49,7 @@ pipeline{
 
              stage("Deploy") {
                        steps{
-                           sh "docker-compose --env-file Config/Test.env up -d"
+                           sh "docker-compose up -d"
                        }
                         post{
                             always {
