@@ -30,9 +30,9 @@ pipeline{
         stage("Clean container") {
             steps {
                 script {
-                    try{
+                    try {
                         sh "docker-compose down"
-                    }finally{ }
+                    } finally{ }
                 }
             }
         }
@@ -41,7 +41,7 @@ pipeline{
             steps {
                 sh "docker-compose up -d"
             }
-            post{
+            post {
                 always {
                     sh "echo 'deploying frontend finished'"
                 }
