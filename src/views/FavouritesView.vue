@@ -12,7 +12,7 @@
     </div>
 
     <div class="mt-8 flex flex-col space-y-6 overflow-scroll">
-      <div v-for="post in posts">
+      <div v-for="(post, index) in posts" v-bind:key="index">
         <Post :the-post="post" :view-type="'FAVOURITEPOSTS'" @refresh="updateView"/>
       </div>
 
@@ -22,9 +22,9 @@
 
 <script setup lang="ts">
 import {SearchIcon, SortAscendingIcon} from "@heroicons/vue/outline";
-import Post from "@/components/Post.vue";
-import {PostService} from "@/services/PostService";
+import type {PostService} from "@/services/PostService";
 import {computed, inject, ref} from "vue";
+import type { GetPostDto } from "@/Dtos/get.post.dto";
 
 const postService = inject<PostService>("postService");
 const userId = "626ed3f991384128af52ad1b"; //TODO get actual user id when login implemented
@@ -37,7 +37,7 @@ postService?.getAllFavouritePosts(userId)
     .catch((error)=>console.log("error: "+error))
 
 const filteredPosts = computed(()=> {
-  return posts.value.filter(post => post.title.toLowerCase().includes(searchInput.value.toLowerCase())
+  return posts.value.filter((post: GetPostDto) => post.title.toLowerCase().includes(searchInput.value.toLowerCase())
       || post.description.toLowerCase().includes(searchInput.value.toLowerCase()));
 });
 

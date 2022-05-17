@@ -71,7 +71,7 @@
 
     <!--COMMENTS-->
     <div class="w-full max-h-36 overflow-y-auto">
-      <div v-for="comment in thePost.comments">
+      <div v-for="(comment, index) in thePost.comments" v-bind:key="index">
         <Comment :the-comment="comment"/>
       </div>
     </div>
@@ -82,11 +82,10 @@
 
 <script setup lang="ts">
 import {LocationMarkerIcon, HeartIcon, AnnotationIcon, ThumbDownIcon, ThumbUpIcon, TrashIcon, PencilAltIcon} from "@heroicons/vue/outline";
-import Comment from "@/components/Comment.vue";
 import {computed, inject, ref, toRefs} from "vue";
 import type {GetPostDto} from "@/Dtos/get.post.dto";
-import {PostService} from "@/services/PostService";
-import {CommentService} from "@/services/CommentService";
+import type {PostService} from "@/services/PostService";
+import type {CommentService} from "@/services/CommentService";
 
 const commentService = inject<CommentService>("commentService");
 const postService = inject<PostService>("postService");
@@ -108,7 +107,7 @@ const todaysDate = computed( () => {
   return now.toLocaleDateString();
 });
 
-function submitComment(postId) {
+function submitComment(postId: string) {
   commentService?.createComment({
     userId: userId,
     postId: postId,

@@ -17,9 +17,7 @@
     </div>
 
     <div class="mt-8 flex flex-col space-y-6 overflow-scroll">
-      <!--TODO CHANGE FOR ACTUAL SEARCH RESULTS-->
-      <Post :the-post="testPost" :view-type="SEARCHPOSTS"/>
-      <Post :the-post="testPost" :view-type="SEARCHPOSTS"/>
+
     </div>
   </div>
 
@@ -27,17 +25,17 @@
 
 <script setup lang="ts">
 import {SearchIcon, LocationMarkerIcon} from "@heroicons/vue/outline";
-import Post from "@/components/Post.vue";
 import type {GetPostDto} from "@/Dtos/get.post.dto";
 
 const testPost: GetPostDto = {
+  id: '12344',
   username: 'string',
   title: 'string',
   description: 'string',
   text: 'string',
   isPrivate: false,
   location: 'string',
-  date: Date.now(),
+  date: new Date(),
   likes: 12,
   dislikes: 2,
   comments: []
