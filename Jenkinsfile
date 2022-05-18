@@ -7,7 +7,7 @@ pipeline{
         nodejs "18.1.0"
     }
     stages{
-        stage("build"){
+        stage("Build frontend"){
             steps{
                 echo ("Building frontend started")
                 dir("TravelBlog-FrontEnd") {
