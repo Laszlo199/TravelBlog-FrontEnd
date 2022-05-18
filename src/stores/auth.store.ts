@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import { AuthService } from "@/services/auth.service";
 import type { Token } from "@/models/Token";
-import axios from "axios";
 
 const authService: AuthService = new AuthService();
 const userId = "userId";
@@ -18,9 +17,12 @@ export const AuthStore = defineStore({
       if (state.loggedInUser != undefined) return state.loggedInUser;
       return {} as Token;
     },
-    userName: (state) => {
-      if (state.loggedInUser.user != undefined) return state.loggedInUser.user;
-      else return "";
+    getUserName(): string {
+      const userName = localStorage.getItem(name);
+      if (userName) {
+        return userName;
+      }
+      return "";
     },
     getUserid: (state) => {
       if (state.loggedInUser != undefined) return state.loggedInUser.user;
