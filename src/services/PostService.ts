@@ -23,6 +23,8 @@ export class PostService {
     return result.data;
   }
 
+
+
   async likePost(like: LikePostDto) {
     await this.http.post<any>("/posts/like", like);
   }

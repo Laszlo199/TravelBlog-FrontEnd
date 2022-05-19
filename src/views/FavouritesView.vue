@@ -24,11 +24,11 @@
 <script setup lang="ts">
 import { SearchIcon, SortAscendingIcon } from "@heroicons/vue/outline";
 import Post from "@/components/Post.vue";
-import { PostService } from "@/services/PostService";
+import type { PostService } from "@/services/PostService";
 import { computed, inject, ref } from "vue";
 
 const postService = inject<PostService>("postService");
-const userId = "626ed3f991384128af52ad1b"; //TODO get actual user id when login implemented
+const userId = "6283639e5f1e8c4361970d07"; //TODO get actual user id when login implemented
 
 const posts = ref([]);
 const searchInput = ref("");

@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-screen w-800 mx-auto">
+  <div onload="listenNotifications()" class="flex flex-col h-screen w-800 mx-auto">
     <div class="flex flex-row justify-between items-center mt-20 mb-4">
       <h1 class="text-4xl text-primary-orange font-bold">My posts</h1>
 
@@ -18,20 +18,29 @@
 </template>
 
 <script setup lang="ts">
+
+function listenNotifications() {
+  notifications.setUser(userId);
+}
+
 import { SearchIcon, SortAscendingIcon } from "@heroicons/vue/outline";
 import Post from "@/components/Post.vue";
-import { PostService } from "@/services/PostService";
+import type { PostService } from "@/services/PostService";
 import { computed, inject, ref } from "vue";
+import { NotificationsStore } from "@/stores/notifications";
 
 const postService = inject<PostService>("postService");
-const userId = "626ed3f991384128af52ad1b"; //TODO get actual user id when login implemented
+const userId = "6283639e5f1e8c4361970d07"; //TODO get actual user id when login implemented
 
 const posts = ref([]);
 const searchInput = ref("");
 
+const notifications = NotificationsStore();
+
 postService
   ?.getAllPosts(userId)
   .then((result) => {
+    //
     posts.value = result.data;
   })
   .catch((error) => console.log("error: " + error));
@@ -45,6 +54,8 @@ const filteredPosts = computed(() => {
 });
 
 function updateView() {
+
+
   postService
     ?.getAllPosts(userId)
     .then((result) => {

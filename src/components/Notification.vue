@@ -12,40 +12,34 @@
         </div>
 
         <div class="text-primary-orange font-bold">
-          <p>Best donuts ever</p>
+<!--          <p>Best donuts ever</p>-->
+          <p>{{theNotification.postName}}</p>
         </div>
       </div>
 
       <div class="flex flex-row mt-2 ml-2 text-sm">
         <div class="pr-2 ">
-          <p class="">Smiley 77 wrote</p>
+<!--          <p class="">Smiley 77 wrote</p>-->
+          <p class="">{{theNotification.eventInvokerId}} wrote</p>
         </div>
 
         <div class="">
-          <p>"I need to try it!"</p>
+<!--          <p>"I need to try it!"</p>-->
+          <p>{{theNotification.text}}</p>
         </div>
       </div>
 
       <div class="flex flex-row mt-2 ml-2 text-xs text-zinc-400">
         <div class="">
-          <p class="">15th March, 09:32</p>
+<!--          <p class="">15th March, 09:32</p>-->
+          <p class="">{{theNotification.date}}</p>
         </div>
 
       </div>
 
-
-
-
-
-
-      <!--      <div class="">
-        <p class="pr-2">smiley77 wrote</p> <p class="">"I need to try it"</p>
-      </div>
-      <div class="">
-        <p class="pr-2">15th March, 9:32</p>
-      </div>-->
     </div>
-    <!-- take all of the left space -->
+
+    <!-- take all of the left space - Buttons -->
     <div class="flex flex-row items-center">
       <div class="lg:pr-2 xl:pr-4 2xl:8 hover">
         <svg
@@ -83,6 +77,24 @@
   </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+
+import { ref } from "vue";
+import type { PostNotificationDto } from "@/Dtos/notification/PostNotificationDto";
+
+const postName = ref();
+const username = ref();
+const comment = ref();
+const date = ref();
+
+const props = defineProps<{
+  theNotification: PostNotificationDto;
+  //depending on the view type (my posts / search posts) we get different elements in post component
+  viewType: string;
+}>();
+
+
+</script>
+
 
 <style scoped></style>

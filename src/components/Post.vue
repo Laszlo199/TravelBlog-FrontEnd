@@ -113,7 +113,7 @@
 
       <div class="flex flex-row space-x-2 items-center">
         <button
-          @click="submitComment(thePost.id)"
+          @click="submitComment(thePost.id); sendNotification()"
           class="bg-primary-orange text-white py-1 px-2 text-sm h-3/4"
         >
           send
@@ -154,10 +154,12 @@ import { computed, inject, ref, toRefs } from "vue";
 import type { GetPostDto } from "@/Dtos/get.post.dto";
 import { PostService } from "@/services/PostService";
 import { CommentService } from "@/services/CommentService";
+import { NotificationsStore } from "@/stores/notifications";
 
 const commentService = inject<CommentService>("commentService");
 const postService = inject<PostService>("postService");
-const userId = "626ed3f991384128af52ad1b"; //TODO get actual user id when login implemented
+
+const userId = "6283639e5f1e8c4361970d07"; //TODO get actual user id when login implemented
 
 const props = defineProps<{
   thePost: GetPostDto;
@@ -169,12 +171,19 @@ const emit = defineEmits(["refresh"]);
 
 const newComment = ref("");
 const isCommentPanelOpen = ref(false);
+const notificationsStore =NotificationsStore();
 const todaysDate = computed(() => {
   const now = new Date();
   return now.toLocaleDateString();
 });
 
-function submitComment(postId) {
+function submitComment(postId: string) {
+  //notification part
+
+
+
+
+
   commentService
     ?.createComment({
       userId: userId,
@@ -187,11 +196,24 @@ function submitComment(postId) {
         isCommentPanelOpen.value = false;
         newComment.value = "";
         emit("refresh");
+
       }
     })
     .catch((error) => {
       console.log("error: " + error);
     });
+}
+
+function sendNotification() {
+  console.log("we enter post method")
+  let noti = {
+    postName: props.thePost.title,
+    eventInvokerId: userId,
+    notificationType: "comment",
+    date: new Date(Date.now()),
+    text: newComment.value
+  };
+  notificationsStore.createNotification(noti);
 }
 
 function editPost() {
