@@ -11,7 +11,7 @@
 
           <!--comment-->
           <p v-if="theNotification.notificationType === 'comment'">New comment for</p>
-          <p v-else-if="theNotification.notificationType === 'favourite'">{{theNotification.eventInvokerId}} just saved</p>
+          <p v-else-if="theNotification.notificationType === 'favourite'">{{theNotification.userName}} just saved</p>
         </div>
 
         <div class="text-primary-orange font-bold">
@@ -23,7 +23,7 @@
       <div class="flex flex-row mt-2 ml-2 text-sm">
         <div class="pr-2 ">
           <!--comment-->
-          <p v-if="theNotification.notificationType === 'comment'">{{theNotification.eventInvokerId}} wrote</p>
+          <p v-if="theNotification.notificationType === 'comment'">{{theNotification.userName}} wrote</p>
         </div>
 
         <div class="">
@@ -84,6 +84,7 @@
 
 import { ref } from "vue";
 import type { PostNotificationDto } from "@/Dtos/notification/PostNotificationDto";
+import type { GetNotificationDto } from "@/Dtos/notification/GetNotificationDto";
 
 const postName = ref();
 const username = ref();
@@ -91,7 +92,7 @@ const comment = ref();
 const date = ref();
 
 const props = defineProps<{
-  theNotification: PostNotificationDto;
+  theNotification: GetNotificationDto;
   //depending on the view type (my posts / search posts) we get different elements in post component
   viewType: string;
 }>();

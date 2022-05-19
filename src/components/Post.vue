@@ -209,7 +209,8 @@ function sendNotification(type: string) {
   console.log("we enter post method")
   let noti = {
     postName: props.thePost.title,
-    eventInvokerId: userId,
+    userId: "6283639e5f1e8c4361970d07",
+    userName: "ss",
     notificationType: type,
     date: new Date(Date.now()),
     text: newComment.value
@@ -237,8 +238,8 @@ function likePost() {
     sendNotification('favourite')
     console.log("fav notification is sent");
   });
+}
 
-  }
 
 </script>
 

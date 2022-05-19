@@ -4,7 +4,8 @@
 export interface GetNotificationDto{
   postName: string;
   // ownerProfile: Profile; we will pass owner id as a key
-  eventInvokerName: string; //we need to send it
+  userId: string;
+  userName: string;
 
   notificationType: string;
   date: Date;
