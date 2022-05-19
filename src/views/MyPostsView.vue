@@ -1,5 +1,5 @@
 <template>
-  <div onload="listenNotifications()" class="flex flex-col h-screen w-800 mx-auto">
+  <div on="listenNotifications()" class="flex flex-col h-screen w-800 mx-auto">
     <div class="flex flex-row justify-between items-center mt-20 mb-4">
       <h1 class="text-4xl text-primary-orange font-bold">My posts</h1>
 
@@ -10,7 +10,7 @@
     </div>
 
     <div class="mt-8 flex flex-col space-y-6 overflow-scroll">
-      <div v-for="post in posts">
+      <div v-for="post in posts" >
         <Post :the-post="post" :view-type="'MYPOSTS'" @refresh="updateView" />
       </div>
     </div>
@@ -20,7 +20,7 @@
 <script setup lang="ts">
 
 function listenNotifications() {
-  notifications.setUser(userId);
+  //notifications.setUser(userId);
 }
 
 import { SearchIcon, SortAscendingIcon } from "@heroicons/vue/outline";
@@ -40,7 +40,7 @@ const notifications = NotificationsStore();
 postService
   ?.getAllPosts(userId)
   .then((result) => {
-    //
+    notifications.setUser(userId);
     posts.value = result.data;
   })
   .catch((error) => console.log("error: " + error));

@@ -4,7 +4,6 @@ import type { PostNotificationDto } from "@/Dtos/notification/PostNotificationDt
 import type { GetNotificationDto } from "@/Dtos/notification/GetNotificationDto";
 import { data } from "autoprefixer";
 
-
 const notificationService = new NotificationService();
 
 export const NotificationsStore = defineStore({
@@ -17,20 +16,19 @@ export const NotificationsStore = defineStore({
     createNotification(notificationDto: PostNotificationDto) {
       console.log("and store");
       notificationService.createNotification(notificationDto);
-      //console.log("notifications size: "+ this.notifications.length);
     },
 
     setUser(userId: string) {
-      console.log("user Id: "+ userId)
-      console.log("listening to nitifications")
+      console.log("user Id: " + userId);
+      console.log("listening to nitifications");
       //if (this.userId) notificationService.disconnect(this.userId);
       this.userId = userId;
       this.notifications = [];
 
       notificationService.listenToNotifications(userId, (notification) => {
-        console.log("We got notification!")
-        //get the name
-        this.notifications.push(notification);
+        console.log("We got notification!");
+        if(!this.notifications.includes(notification))
+          this.notifications.push(notification);
       });
     },
   },

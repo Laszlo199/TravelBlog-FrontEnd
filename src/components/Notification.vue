@@ -8,30 +8,31 @@
     <div class="grow">
       <div class="flex flex-row mt-2 ml-2 ">
         <div class="pr-2 font-bold">
-          <p class="">New comment for</p>
+
+          <!--comment-->
+          <p>New comment for</p>
         </div>
 
         <div class="text-primary-orange font-bold">
-<!--          <p>Best donuts ever</p>-->
+          <!--comment-->
           <p>{{theNotification.postName}}</p>
         </div>
       </div>
 
       <div class="flex flex-row mt-2 ml-2 text-sm">
         <div class="pr-2 ">
-<!--          <p class="">Smiley 77 wrote</p>-->
+          <!--comment-->
           <p class="">{{theNotification.eventInvokerId}} wrote</p>
         </div>
 
         <div class="">
-<!--          <p>"I need to try it!"</p>-->
+          <!--comment-->
           <p>{{theNotification.text}}</p>
         </div>
       </div>
 
       <div class="flex flex-row mt-2 ml-2 text-xs text-zinc-400">
         <div class="">
-<!--          <p class="">15th March, 09:32</p>-->
           <p class="">{{theNotification.date}}</p>
         </div>
 
@@ -92,6 +93,8 @@ const props = defineProps<{
   //depending on the view type (my posts / search posts) we get different elements in post component
   viewType: string;
 }>();
+
+
 
 
 </script>

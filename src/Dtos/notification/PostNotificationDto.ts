@@ -1,4 +1,5 @@
 export interface PostNotificationDto{
+  id:string;
   postName: string;
  // ownerProfile: Profile; we will pass owner id as a key
   eventInvokerId: string; //we need to send it
