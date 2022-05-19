@@ -35,7 +35,7 @@
       <div class="flex flex-row mt-2 ml-2 text-xs text-zinc-400">
         <div class="">
           <!--comment && favourite -->
-          <p class="">{{theNotification.date}}</p>
+          <p class="">{{formatDate(theNotification.date)}}</p>
         </div>
 
       </div>
@@ -93,11 +93,11 @@ const date = ref();
 
 const props = defineProps<{
   theNotification: GetNotificationDto;
-  //depending on the view type (my posts / search posts) we get different elements in post component
-  viewType: string;
 }>();
 
-
+function formatDate(date: Date) {
+  return new Date(date).toLocaleDateString('en',{ hour: 'numeric', year: 'numeric', month: 'long', day: 'numeric'})
+}
 
 
 </script>
