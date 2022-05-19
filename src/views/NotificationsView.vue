@@ -24,7 +24,7 @@
 import Notification from "@/components/Notification.vue";
 import { NotificationsStore } from "@/stores/notifications";
 const userId = "6283639e5f1e8c4361970d07";
-
+const notificationsStore =  NotificationsStore()
 
 
 </script>

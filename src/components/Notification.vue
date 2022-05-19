@@ -10,11 +10,12 @@
         <div class="pr-2 font-bold">
 
           <!--comment-->
-          <p>New comment for</p>
+          <p v-if="theNotification.notificationType === 'comment'">New comment for</p>
+          <p v-else-if="theNotification.notificationType === 'favourite'">{{theNotification.eventInvokerId}} just saved</p>
         </div>
 
         <div class="text-primary-orange font-bold">
-          <!--comment-->
+          <!--comment && favourite-->
           <p>{{theNotification.postName}}</p>
         </div>
       </div>
@@ -22,17 +23,18 @@
       <div class="flex flex-row mt-2 ml-2 text-sm">
         <div class="pr-2 ">
           <!--comment-->
-          <p class="">{{theNotification.eventInvokerId}} wrote</p>
+          <p v-if="theNotification.notificationType === 'comment'">{{theNotification.eventInvokerId}} wrote</p>
         </div>
 
         <div class="">
           <!--comment-->
-          <p>{{theNotification.text}}</p>
+          <p v-if="theNotification.notificationType === 'comment'">{{theNotification.text}}</p>
         </div>
       </div>
 
       <div class="flex flex-row mt-2 ml-2 text-xs text-zinc-400">
         <div class="">
+          <!--comment && favourite -->
           <p class="">{{theNotification.date}}</p>
         </div>
 

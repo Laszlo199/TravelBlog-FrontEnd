@@ -14,7 +14,7 @@ export const NotificationsStore = defineStore({
   }),
   actions: {
     createNotification(notificationDto: PostNotificationDto) {
-      console.log("and store");
+      console.log("and notification created in store");
       notificationService.createNotification(notificationDto);
     },
 

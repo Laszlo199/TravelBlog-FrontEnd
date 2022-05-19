@@ -65,7 +65,7 @@
     >
       <div class="flex flex-row space-x-2 items-center">
         <div
-          @click="likePost()"
+          @click="likePost();"
           class="flex flex-row space-x-2 items-center mr-2 text-primary-grey stroke-primary-grey hover:stroke-black cursor-pointer hover:text-black"
         >
           <HeartIcon
@@ -113,7 +113,7 @@
 
       <div class="flex flex-row space-x-2 items-center">
         <button
-          @click="submitComment(thePost.id); sendNotification()"
+          @click="submitComment(thePost.id); sendNotification('comment')"
           class="bg-primary-orange text-white py-1 px-2 text-sm h-3/4"
         >
           send
@@ -204,17 +204,20 @@ function submitComment(postId: string) {
     });
 }
 
-function sendNotification() {
+function sendNotification(type: string) {
+
   console.log("we enter post method")
   let noti = {
     postName: props.thePost.title,
     eventInvokerId: userId,
-    notificationType: "comment",
+    notificationType: type,
     date: new Date(Date.now()),
     text: newComment.value
   };
   notificationsStore.createNotification(noti);
 }
+
+
 
 function editPost() {
   //TODO implement edit post
@@ -224,9 +227,19 @@ function deletePost() {
   //TODO implement delete posts
 }
 
+
+/**
+ * actaully it adds it to favourites
+ */
 function likePost() {
-  postService?.likePost({ userId: userId, postId: props.thePost.id });
-}
+  postService?.likePost({ userId: userId, postId: props.thePost.id })
+  .then(()=>{
+    sendNotification('favourite')
+    console.log("fav notification is sent");
+  });
+
+  }
+
 </script>
 
 <style scoped>
