@@ -9,11 +9,13 @@
       </div>
       <p class="text-sm text-primary-grey font-medium whitespace-nowrap">{{ postDate }}</p>
 
+      <!--EDIT / DELETE-->
       <div v-if="viewType=='MYPOSTS'" class="w-full flex flex-row justify-between">
         <p class="text-sm text-primary-orange">{{ thePost.isPrivate ? 'private' : 'public' }}</p>
         <div class="flex flex-row space-x-2">
           <PencilAltIcon @click="editPost()" class="w-6 h-6 stroke-primary-grey stroke-2 cursor-pointer hover:stroke-black" />
-          <TrashIcon @click="deletePost()" class="w-6 h-6 stroke-primary-grey stroke-2 cursor-pointer hover:stroke-black" />
+          <TrashIcon @click="isDeleting=!isDeleting;" class="w-6 h-6 stroke-primary-grey stroke-2 cursor-pointer hover:stroke-black" />
+          <p v-if="isDeleting" @click="deletePost()" class="cursor-pointer text-primary-red hover:underline underline-offset-4">click here to delete</p>
         </div>
       </div>
     </div>
@@ -106,6 +108,7 @@ const emit = defineEmits(['refresh'])
 
 const newComment = ref("");
 const isCommentPanelOpen = ref(false);
+const isDeleting = ref(false);
 const todaysDate = computed( () => {
   const now = new Date();
   return now.toLocaleDateString();
@@ -137,7 +140,12 @@ function editPost() {
 }
 
 function deletePost() {
-  //TODO implement delete posts
+  postService?.deletePost(props.thePost.id).then((result) => {
+    if(result.data) {
+      isDeleting.value = false;
+      emit('refresh');
+    }
+  });
 }
 
 function likePost() {
