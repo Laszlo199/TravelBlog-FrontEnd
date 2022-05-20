@@ -224,7 +224,7 @@ function deletePost() {
 
 
 /**
- * actaully it adds post favourites
+ * actually it adds post favourites
  */
 function likePost() {
   postService?.likePost({ userId: userId, postId: props.thePost.id })
