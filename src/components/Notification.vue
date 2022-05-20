@@ -17,7 +17,7 @@
 
         <div class="text-primary-orange font-bold">
           <!--comment && favourite-->
-          <p>{{theNotification.postName}}</p>
+          <p>{{showText(theNotification.postName)}}</p>
         </div>
       </div>
 
@@ -29,7 +29,7 @@
 
         <div class="">
           <!--comment-->
-          <p v-if="theNotification.notificationType === 'comment'">{{theNotification.text}}</p>
+          <p v-if="theNotification.notificationType === 'comment'">{{showText(theNotification.text)}}</p>
         </div>
       </div>
 
@@ -104,6 +104,12 @@ const props = defineProps<{
 function formatDate(date: Date) {
   return new Date(date).toLocaleDateString('en',
     { hour: 'numeric', year: 'numeric', month: 'long', day: 'numeric'})
+}
+
+function showText(text: string){
+  if(text.length>100)
+    text= text.slice(0, 100) +"...";
+  return text;
 }
 
 
