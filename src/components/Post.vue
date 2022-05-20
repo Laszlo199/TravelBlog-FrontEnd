@@ -27,7 +27,9 @@
         <h2 class="text-black text-xl font-bold">{{ thePost.title }}</h2>
         <p v-if="thePost.description.length>0" class="text-base text-black">{{ thePost.description }}</p>
         <p v-if="thePost.description.length<200" class="text-base text-black post-text-wrap italic">{{ thePost.text }}</p>
-        <p class="text-base text-medium text-primary-orange font-medium cursor-pointer">Read more</p>
+        <RouterLink :to="{ name: 'read-more', params: { id: thePost.id } }">
+          <p class="text-base text-medium text-primary-orange font-medium cursor-pointer">Read more</p>
+        </RouterLink>
       </div>
     </div>
 
@@ -148,6 +150,7 @@ function deletePost() {
   });
 }
 
+//adds to favourites
 function likePost() {
   postService?.likePost({userId: userId, postId: props.thePost.id})
 }
