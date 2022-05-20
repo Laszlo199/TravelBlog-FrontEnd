@@ -60,7 +60,7 @@
           />
         </svg>
       </div>
-      <div class="pr-2">
+      <div class="pr-2" @click="$emit('remove', i)">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-12 w-12 hover:opacity-40"
@@ -82,9 +82,11 @@
 
 <script setup lang="ts">
 
+
 import { ref } from "vue";
 import type { PostNotificationDto } from "@/Dtos/notification/PostNotificationDto";
 import type { GetNotificationDto } from "@/Dtos/notification/GetNotificationDto";
+import { NotificationsStore } from "@/stores/notifications";
 
 const postName = ref();
 const username = ref();
@@ -96,7 +98,8 @@ const props = defineProps<{
 }>();
 
 function formatDate(date: Date) {
-  return new Date(date).toLocaleDateString('en',{ hour: 'numeric', year: 'numeric', month: 'long', day: 'numeric'})
+  return new Date(date).toLocaleDateString('en',
+    { hour: 'numeric', year: 'numeric', month: 'long', day: 'numeric'})
 }
 
 

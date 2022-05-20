@@ -10,8 +10,8 @@
             Notifications
           </h1>
         </div >
-        <div v-for="n in notificationsStore.notifications" >
-          <notification :the-notification="n" :key="n.data" ></notification> <!--:key="n.data"-->
+        <div v-for="(n, i) in notificationsStore.notifications" >
+          <notification @remove='remove(i)' :the-notification="n" :key="n.data" ></notification> <!--:key="n.data"-->
         </div>
       </div>
 
@@ -26,6 +26,10 @@ import { NotificationsStore } from "@/stores/notifications";
 const userId = "6283639e5f1e8c4361970d07";
 const notificationsStore =  NotificationsStore()
 
+function remove(i: number){
+    notificationsStore.notifications.splice(i, 1)
+
+}
 
 </script>
 <style scoped></style>
