@@ -44,7 +44,7 @@
 
     <!-- take all of the left space - Buttons -->
     <div class="flex flex-row items-center">
-      <div class="lg:pr-2 xl:pr-4 2xl:8 hover">
+      <div  @click="$emit('redirect')" class="lg:pr-2 xl:pr-4 2xl:8 hover">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="h-12 w-12 hover:opacity-40"
@@ -60,6 +60,7 @@
           />
         </svg>
       </div>
+
       <div class="pr-2" @click="$emit('remove', i)">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -83,10 +84,12 @@
 <script setup lang="ts">
 
 
+
 import { ref } from "vue";
 import type { PostNotificationDto } from "@/Dtos/notification/PostNotificationDto";
 import type { GetNotificationDto } from "@/Dtos/notification/GetNotificationDto";
 import { NotificationsStore } from "@/stores/notifications";
+import router from "@/router";
 
 const postName = ref();
 const username = ref();
