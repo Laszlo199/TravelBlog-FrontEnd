@@ -7,13 +7,15 @@
         <LocationMarkerIcon class="w-4 h-4 stroke-primary-grey stroke-2" />
         <p class="text-sm text-primary-grey font-medium">{{ thePost.location }}</p>
       </div>
-      <p class="text-sm text-primary-grey font-medium whitespace-nowrap">{{ thePost.date }}</p>
+      <p class="text-sm text-primary-grey font-medium whitespace-nowrap">{{ postDate }}</p>
 
+      <!--EDIT / DELETE-->
       <div v-if="viewType=='MYPOSTS'" class="w-full flex flex-row justify-between">
         <p class="text-sm text-primary-orange">{{ thePost.isPrivate ? 'private' : 'public' }}</p>
         <div class="flex flex-row space-x-2">
           <PencilAltIcon @click="editPost()" class="w-6 h-6 stroke-primary-grey stroke-2 cursor-pointer hover:stroke-black" />
-          <TrashIcon @click="deletePost()" class="w-6 h-6 stroke-primary-grey stroke-2 cursor-pointer hover:stroke-black" />
+          <TrashIcon @click="isDeleting=!isDeleting;" class="w-6 h-6 stroke-primary-grey stroke-2 cursor-pointer hover:stroke-black" />
+          <p v-if="isDeleting" @click="deletePost()" class="cursor-pointer text-primary-red hover:underline underline-offset-4">click here to delete</p>
         </div>
       </div>
     </div>
@@ -24,7 +26,7 @@
       <div class="w-5/8 flex flex-col space-y-2 ml-2">
         <h2 class="text-black text-xl font-bold">{{ thePost.title }}</h2>
         <p v-if="thePost.description.length>0" class="text-base text-black">{{ thePost.description }}</p>
-        <p v-if="thePost.description.length<200" class="text-base text-black post-text-wrap">{{ thePost.text }}</p>
+        <p v-if="thePost.description.length<200" class="text-base text-black post-text-wrap italic">{{ thePost.text }}</p>
         <RouterLink :to="{ name: 'read-more', params: { id: thePost.id } }">
           <p class="text-base text-medium text-primary-orange font-medium cursor-pointer">Read more</p>
         </RouterLink>
@@ -62,7 +64,8 @@
           <p class="text-primary-grey">{{ todaysDate }}</p>
         </div>
 
-        <input v-model="newComment" placeholder="Type your comment here..." class="text-sm text-black focus:outline-none w-full" />
+        <input type="text" v-model="newComment" placeholder="Type your comment here..."
+               class="text-sm text-black focus:outline-none w-full" />
       </div>
 
       <div class="flex flex-row space-x-2 items-center">
@@ -73,7 +76,7 @@
 
     <!--COMMENTS-->
     <div class="w-full max-h-36 overflow-y-auto">
-      <div v-for="comment in thePost.comments">
+      <div v-for="comment in _.sortBy(thePost.comments,['date']).reverse()">
         <Comment :the-comment="comment"/>
       </div>
     </div>
@@ -89,6 +92,8 @@ import {computed, inject, ref, toRefs} from "vue";
 import type {GetPostDto} from "@/Dtos/get.post.dto";
 import {PostService} from "@/services/PostService";
 import {CommentService} from "@/services/CommentService";
+import moment from "moment";
+import * as _ from "underscore";
 
 const commentService = inject<CommentService>("commentService");
 const postService = inject<PostService>("postService");
@@ -105,12 +110,17 @@ const emit = defineEmits(['refresh'])
 
 const newComment = ref("");
 const isCommentPanelOpen = ref(false);
+const isDeleting = ref(false);
 const todaysDate = computed( () => {
   const now = new Date();
   return now.toLocaleDateString();
 });
 
-function submitComment(postId) {
+const postDate = computed( () => {
+  return moment(String(props.thePost.date)).format('DD/MM/YYYY');
+});
+
+function submitComment(postId: string) {
   commentService?.createComment({
     userId: userId,
     postId: postId,
@@ -132,7 +142,12 @@ function editPost() {
 }
 
 function deletePost() {
-  //TODO implement delete posts
+  postService?.deletePost(props.thePost.id).then((result) => {
+    if(result.data) {
+      isDeleting.value = false;
+      emit('refresh');
+    }
+  });
 }
 
 //adds to favourites

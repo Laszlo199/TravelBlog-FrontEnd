@@ -32,4 +32,8 @@ export class PostService {
         await this.http.post<any>("/posts/like", like);
     }
 
+    async deletePost(postId: string) {
+        return await this.http.delete<any>("/posts/"+postId);
+    }
+
 }

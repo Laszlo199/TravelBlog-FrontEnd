@@ -13,7 +13,7 @@ provide("commentService", new CommentService());
 <template>
   <div class="flex flex-row w-screen h-screen bg-background-grey">
     <SideMenu />
-    <RouterView />
+    <RouterView class="pb-10"/>
   </div>
 </template>
 
