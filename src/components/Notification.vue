@@ -12,6 +12,7 @@
           <!--comment-->
           <p v-if="theNotification.notificationType === 'comment'">New comment for</p>
           <p v-else-if="theNotification.notificationType === 'favourite'">{{theNotification.userName}} just saved</p>
+          <p v-else-if="theNotification.notificationType === 'like'">{{theNotification.userName}} just liked</p>
         </div>
 
         <div class="text-primary-orange font-bold">

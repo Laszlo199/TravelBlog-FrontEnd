@@ -85,7 +85,7 @@
 
       <!--LIKES-->
       <div class="flex flex-row space-x-2 items-center">
-        <ThumbUpIcon class="w-5 h-5 stroke-primary-grey cursor-pointer" />
+        <ThumbUpIcon  class="w-5 h-5 stroke-primary-grey cursor-pointer" />
         <p class="text-base text-primary-grey">{{ thePost.likes }}</p>
         <ThumbDownIcon class="w-5 h-5 stroke-primary-grey cursor-pointer" />
         <p class="text-base text-primary-grey">{{ thePost.dislikes }}</p>
@@ -178,10 +178,6 @@ const todaysDate = computed(() => {
 });
 
 function submitComment(postId: string) {
-  //notification part
-
-
-
 
 
   commentService
@@ -205,12 +201,10 @@ function submitComment(postId: string) {
 }
 
 function sendNotification(type: string) {
-
-  console.log("we enter post method")
   let noti = {
     postName: props.thePost.title,
-    userId: "6283639e5f1e8c4361970d07",
-    userName: "ss",
+    userId: userId,
+    userName: "user",
     notificationType: type,
     date: new Date(Date.now()),
     text: newComment.value
@@ -230,13 +224,12 @@ function deletePost() {
 
 
 /**
- * actaully it adds it to favourites
+ * actaully it adds post favourites
  */
 function likePost() {
   postService?.likePost({ userId: userId, postId: props.thePost.id })
   .then(()=>{
     sendNotification('favourite')
-    console.log("fav notification is sent");
   });
 }
 
