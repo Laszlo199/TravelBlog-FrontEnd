@@ -109,8 +109,8 @@ const todaysDate = computed( () => {
   return now.toLocaleDateString();
 });
 
-const base64String = (props.thePost.photo && props.thePost.photo.data) ?
-    btoa(String.fromCharCode(...new Uint8Array(props.thePost.photo.data))) : '';
+const base64String = (props.thePost.photo) ?
+    props.thePost.photo : '';
 const data_url = (base64String!='') ? "data:image/png;base64," + base64String : '';
 const imgSource = ref(data_url);
 
