@@ -19,13 +19,14 @@ export class PostService {
         return this.http.get("/posts/liked/userId/"+id);
     }
 
-    getPost(id: string): Promise<GetPostDto> {
-        return this.http.get("/posts/"+id);
+    async createPost(post: CreatePostDto, file: FormData): Promise<any> {
+        const createdPost = await this.http.post<any>("/posts", post);
+        const result = await this.http.post<any>("/posts/file/"+createdPost.data._id, file);
+        return result.data;
     }
 
-    async createPost(post: CreatePostDto): Promise<any> {
-        const result = await this.http.post<any>("/posts", post);
-        return result.data;
+    getPost(id: string): Promise<GetPostDto> {
+        return this.http.get("/posts/"+id);
     }
 
     async likePost(like: LikePostDto) {

@@ -47,6 +47,11 @@
         :disabled="isCreated"></textarea>
     </div>
 
+    <!--FILE UPLOAD-->
+    <input @change="onFileSelected($event)" type="file" accept="image/*"
+          class="mb-4 file:bg-white file:border-none hover:file:text-primary-orange hover:file:cursor-pointer"/>
+
+    <!--BUTTON-->
     <button
       @click="submitPost()"
       :disabled="isCreated"
@@ -76,11 +81,14 @@ const description = ref("");
 const text = ref("");
 const isPrivate = ref(false);
 const location = ref("");
+let photo: File;
 
 const isCreated = ref(false);
 
 function submitPost() {
   if (title.value.length > 2 && text.value.length > 2 && location.value.length > 2) {
+    const fd = new FormData();
+    fd.append('file', photo, photo.name)
     postService
       ?.createPost({
         userId: userId,
@@ -90,10 +98,15 @@ function submitPost() {
         isPrivate: isPrivate.value,
         location: location.value,
         date: new Date(),
-      })
+      }, fd)
       .then(() => (isCreated.value = true));
   }
 }
+
+function onFileSelected(event: Event) {
+  photo = event?.target?.files[0];
+}
+
 </script>
 
 <style scoped></style>
