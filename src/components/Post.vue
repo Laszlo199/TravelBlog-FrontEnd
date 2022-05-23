@@ -21,7 +21,7 @@
     </div>
 
     <!--CONTENT-->
-    <div class="flex flex-row w-full border-b-2 border-primary-grey/20 mt-2 pb-2 px-2">
+    <div class="flex flex-row w-full border-b-2 border-primary-grey/20 mt-2 pb-2">
       <img v-if="imgSource != ''" :src="imgSource"
           class="w-2/8 h-full"/>
       <div class="w-5/8 flex flex-col space-y-2 ml-2">
