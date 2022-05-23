@@ -87,7 +87,7 @@ const filteredPosts = computed(()=> {
 });
 
 function updateView() {
-  postService?.getAllPosts(userId)
+  postService?.getAllFavouritePosts(userId)
       .then((result) => {posts.value = result.data;})
       .catch((error)=>console.log("error: "+error))
 }
