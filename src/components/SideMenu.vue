@@ -1,5 +1,7 @@
 <template>
-  <div class="flex flex-col justify-between pt-10 pl-14 pb-20 h-screen w-80 bg-white">
+  <div
+    class="flex flex-col justify-between pt-10 pl-14 pb-20 h-screen w-80 bg-white"
+  >
     <!--HEADER-->
     <h1 class="text-3xl font-bold flex flex-row">
       <p class="text-black">We</p>
@@ -54,20 +56,32 @@
     </div>
 
     <!--LOG OUT-->
-    <h2 class="text-lg font-bold mt-20">Log out</h2>
+    <h2 @click="logout" class="text-lg font-bold mt-20">Log out</h2>
 
   </div>
 </template>
 
 <script setup lang="ts">
-import {SearchCircleIcon, PlusCircleIcon, CollectionIcon, HeartIcon, BellIcon, CogIcon} from "@heroicons/vue/outline";
+import {
+  SearchCircleIcon,
+  PlusCircleIcon,
+  CollectionIcon,
+  StarIcon,
+  BellIcon,
+  CogIcon,
+} from "@heroicons/vue/outline";
+import { AuthStore } from "@/stores/auth.store";
 import {ref} from "vue";
 
 //SEARCH / ADDPOST / MYPOSTS / FAVOURITES / NOTIFICATIONS
 const openLabel = ref("SEARCH")
 
+const authStore = AuthStore();
+
+function logout() {
+  authStore.logout();
+  window.location.replace("/");
+}
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

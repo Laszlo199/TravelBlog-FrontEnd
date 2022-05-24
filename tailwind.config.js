@@ -7,6 +7,7 @@ module.exports = {
     extend: {
       colors: {
         'primary-orange': '#E29219',
+        "button-orange":  "#ff751a",
         'background-grey': '#E5E5E5',
         'primary-grey': '#838383',
         'primary-red': '#E23A3A',
