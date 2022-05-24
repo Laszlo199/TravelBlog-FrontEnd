@@ -1,13 +1,13 @@
 <template>
   <!-- content wrapper  -->
   <div
-    class="flex flex-row h-24 w-full mx-auto bg-white shadow-md overflow-hidden m-5"
+    class="flex flex-row h-24 w-full mx-auto bg-white overflow-hidden m-5"
   >
 
     <!-- info 1    -->
     <div class="grow">
       <div class="flex flex-row mt-2 ml-2 ">
-        <div class="pr-2 font-bold">
+        <div class="pr-2 font-medium">
 
           <!--comment-->
           <p v-if="theNotification.notificationType === 'comment'">New comment for</p>
@@ -29,7 +29,7 @@
 
         <div class="">
           <!--comment-->
-          <p v-if="theNotification.notificationType === 'comment'">{{showText(theNotification.text)}}</p>
+          <p v-if="theNotification.notificationType === 'comment'"> "{{showText(theNotification.text)}}"</p>
         </div>
       </div>
 
@@ -45,38 +45,12 @@
 
     <!-- take all of the left space - Buttons -->
     <div class="flex flex-row items-center">
-      <div  @click="$emit('redirect')" class="lg:pr-2 xl:pr-4 2xl:8 hover">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-12 w-12 hover:opacity-40"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M17 8l4 4m0 0l-4 4m4-4H3"
-          />
-        </svg>
+      <div  @click="$emit('redirect')" class="lg:pr-2 xl:pr-4 2xl:8 hover ">
+        <ArrowRightIcon class="h-7 w-7 hover:opacity-40 opacity-90" />
       </div>
 
-      <div class="pr-2" @click="$emit('remove', i)">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          class="h-12 w-12 hover:opacity-40"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-          stroke-width="2"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M6 18L18 6M6 6l12 12"
-          />
-        </svg>
+      <div class="pl-5 xl:14 pr-6" @click="$emit('remove', i)">
+        <XIcon class="w-7 h-7 hover:opacity-40 opacity-90"></XIcon>
       </div>
     </div>
   </div>
@@ -87,14 +61,9 @@
 
 
 import { ref } from "vue";
-import type { PostNotificationDto } from "@/Dtos/notification/PostNotificationDto";
 import type { GetNotificationDto } from "@/Dtos/notification/GetNotificationDto";
-import { NotificationsStore } from "@/stores/notifications";
-import router from "@/router";
+import {XIcon, ArrowRightIcon} from "@heroicons/vue/outline"
 
-const postName = ref();
-const username = ref();
-const comment = ref();
 const date = ref();
 
 const props = defineProps<{
