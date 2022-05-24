@@ -28,7 +28,11 @@ export const AuthStore = defineStore({
       if (state.loggedInUser != undefined) return state.loggedInUser.user;
       else return -1;
     },
-    isAuthenticated: (state) => !!state.loggedInUser.token,
+    isAuthenticated: (state) => {
+      if (state.loggedInUser.token != undefined)
+        return state.loggedInUser.token;
+      else null;
+    },
   },
   actions: {
     registerUser(userName: string, password: string) {
@@ -57,6 +61,12 @@ export const AuthStore = defineStore({
               reject(error);
           });
       });
+    },
+
+    logout() {
+      localStorage.removeItem(token);
+      localStorage.removeItem(name);
+      localStorage.removeItem(userId);
     },
   },
 });
