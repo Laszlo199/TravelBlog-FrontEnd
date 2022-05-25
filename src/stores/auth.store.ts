@@ -26,7 +26,7 @@ export const AuthStore = defineStore({
     },
     getUserid: (state) => {
       if (state.loggedInUser != undefined) return state.loggedInUser.user;
-      else return -1;
+      else return "";
     },
     isAuthenticated: (state) => {
       if (state.loggedInUser.token != undefined)
