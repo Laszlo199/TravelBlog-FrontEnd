@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LoginView from "../views/LoginView.vue";
 import RegisterView from "../views/RegisterView.vue";
+import {AuthStore} from "@/stores/auth.store";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,6 +47,20 @@ const router = createRouter({
       component: () => import('../views/ReadMoreView.vue')
     }
   ]
+})
+
+router.beforeEach(async (to) => {
+  const authStore = AuthStore();
+  if (
+      // make sure the user is authenticated
+      !authStore.isAuthenticated &&
+      // ❗️ Avoid an infinite redirect
+      to.name !== 'login' &&
+      to.name !== 'register'
+  ) {
+    // redirect the user to the login page
+    return { name: 'login' }
+  }
 })
 
 export default router;
