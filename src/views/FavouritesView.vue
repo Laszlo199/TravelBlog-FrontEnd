@@ -36,9 +36,11 @@ import {PostService} from "@/services/PostService";
 import {computed, inject, ref} from "vue";
 import type {GetPostDto} from "@/Dtos/get.post.dto";
 import * as _ from "underscore";
+import { AuthStore } from "@/stores/auth.store";
+const authStore = AuthStore();
 
 const postService = inject<PostService>("postService");
-const userId = "626ed3f991384128af52ad1b"; //TODO get actual user id when login implemented
+const userId = authStore.getUserid;
 
 const posts = ref([]);
 const searchInput = ref('');

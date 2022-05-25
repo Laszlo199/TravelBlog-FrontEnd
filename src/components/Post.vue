@@ -95,10 +95,12 @@ import {PostService} from "@/services/PostService";
 import {CommentService} from "@/services/CommentService";
 import moment from "moment";
 import * as _ from "underscore";
+import { AuthStore } from "@/stores/auth.store";
 
 const commentService = inject<CommentService>("commentService");
 const postService = inject<PostService>("postService");
-const userId = "626ed3f991384128af52ad1b"; //TODO get actual user id when login implemented
+const authStore = AuthStore();
+const userId = authStore.getUserid; //TODO get actual user id when login implemented
 
 
 const props = defineProps<{
