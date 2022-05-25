@@ -44,6 +44,7 @@ import { SearchIcon, SortAscendingIcon, XIcon } from "@heroicons/vue/outline";
 import Post from "@/components/Post.vue";
 import SortMenu from "@/components/SortMenu.vue";
 import { PostService } from "@/services/PostService";
+import { NotificationsStore } from "@/stores/notifications";
 import { computed, inject, ref } from "vue";
 import * as _ from "underscore";
 import type { GetPostDto } from "@/Dtos/get.post.dto";

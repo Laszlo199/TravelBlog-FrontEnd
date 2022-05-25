@@ -69,6 +69,7 @@ import {
   StarIcon,
   BellIcon,
   CogIcon,
+  HeartIcon
 } from "@heroicons/vue/outline";
 import { AuthStore } from "@/stores/auth.store";
 import {ref} from "vue";

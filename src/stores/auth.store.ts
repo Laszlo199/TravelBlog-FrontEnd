@@ -10,7 +10,7 @@ const token = "Token";
 export const AuthStore = defineStore({
   id: "authStore",
   state: () => ({
-    loggedInUser: { token: localStorage.getItem(token) } as Token,
+    loggedInUser: { token: "", user: "" } as Token,
   }),
   getters: {
     loggedIn: (state) => {

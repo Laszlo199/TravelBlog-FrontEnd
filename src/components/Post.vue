@@ -128,16 +128,17 @@ import {
 import Comment from "@/components/Comment.vue";
 import {computed, inject, ref, toRefs} from "vue";
 import type {GetPostDto} from "@/Dtos/get.post.dto";
-import {PostService} from "@/services/PostService";
-import {CommentService} from "@/services/CommentService";
+import type { PostService } from "@/services/PostService";
+import type { CommentService } from "@/services/CommentService";
 import moment from "moment";
 import * as _ from "underscore";
 import { AuthStore } from "@/stores/auth.store";
+import { NotificationsStore } from "@/stores/notifications";
 
 const commentService = inject<CommentService>("commentService");
 const postService = inject<PostService>("postService");
 const authStore = AuthStore();
-const userId = authStore.getUserid; //TODO get actual user id when login implemented
+const userId = authStore.getUserid;
 
 const props = defineProps<{
   thePost: GetPostDto;
