@@ -54,7 +54,7 @@
              class="w-4 h-4 rounded-full bg-primary-red relative text-white text-xs align-text-center right-2 top-2 flex justify-center">
           {{notificationsStore.notifications.length}}</div>
         <RouterLink to="/notifications">
-          <p class="">notifications</p>
+          <p :class="{ 'ml-3': notificationsStore.notifications.length==0 }">notifications</p>
         </RouterLink>
       </div>
     </div>
