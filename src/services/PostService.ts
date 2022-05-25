@@ -37,4 +37,8 @@ export class PostService {
         return await this.http.delete<any>("/posts/"+postId);
     }
 
+    async search(keyword: string, location: string) {
+      return await this.http.get<GetPostDto[]>("/posts/search?keyword=" + keyword + "&location=" + location);
+    }
+
 }
