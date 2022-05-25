@@ -1,5 +1,5 @@
 <template>
-  <div class="flex flex-col h-screen w-800 mx-auto">
+  <div on="listenNotifications()" class="flex flex-col h-screen w-800 mx-auto">
     <div class="flex flex-row justify-between items-center mt-20 mb-4">
       <h1 class="text-4xl text-primary-orange font-bold">My posts</h1>
 
@@ -49,18 +49,25 @@ import * as _ from "underscore";
 import type { GetPostDto } from "@/Dtos/get.post.dto";
 import { AuthStore } from "@/stores/auth.store";
 
+const notifications = NotificationsStore();
 const postService = inject<PostService>("postService");
 const authStore = AuthStore();
 const userId = authStore.getUserid;
 
 const posts = ref([]);
 const searchInput = ref("");
+
+function listenNotifications() {
+  //notifications.setUser(userId);
+}
 const isSearch = ref(false);
 const sortType = ref("");
+
 
 postService
   ?.getAllPosts(userId)
   .then((result) => {
+    notifications.setUser(userId);
     posts.value = result.data;
   })
   .catch((error) => console.log("error: " + error));

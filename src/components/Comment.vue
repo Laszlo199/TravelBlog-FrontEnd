@@ -8,7 +8,6 @@
 
     <p class="text-sm text-black">{{ theComment.text }}</p>
   </div>
-
 </template>
 
 <script setup lang="ts">
@@ -17,7 +16,7 @@ import {computed} from "vue";
 import moment from "moment";
 
 const props = defineProps<{
-  theComment:GetCommentDto
+  theComment: GetCommentDto;
 }>();
 
 const commentDate = computed( () => {
@@ -26,6 +25,4 @@ const commentDate = computed( () => {
 
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

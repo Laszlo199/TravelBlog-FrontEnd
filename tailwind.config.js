@@ -1,8 +1,5 @@
 module.exports = {
-  content: [
-    "./index.html",
-    "./src/**/*.{vue,js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{vue,js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
@@ -13,12 +10,12 @@ module.exports = {
         'primary-red': '#E23A3A',
       },
       width: {
-        '800': '800px',
-        '2/8': '25%',
-        '5/8': '62.5%',
-        '7/8': '87.5%'
-      }
+        800: "800px",
+        "2/8": "25%",
+        "5/8": "62.5%",
+        "7/8": "87.5%",
+      },
     },
   },
   plugins: [],
-}
+};

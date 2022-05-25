@@ -10,7 +10,6 @@
 
     <!--TABS-->
     <div class="flex flex-col text-lg font-medium text-black space-y-3">
-
       <div @click="openLabel='SEARCH'"
            :class="{'text-primary-orange': openLabel=='SEARCH',  'hover:text-primary-orange': openLabel=='SEARCH'}"
            class="flex flex-row items-center hover:cursor-pointer hover:text-primary-grey text-black">
@@ -51,13 +50,14 @@
            :class="{'text-primary-orange': openLabel=='NOTIFICATIONS',  'hover:text-primary-orange': openLabel=='NOTIFICATIONS'}"
            class="flex flex-row items-center hover:cursor-pointer hover:text-primary-grey text-black">
         <BellIcon class="w-4 h-4"/>
-        <p class="ml-3">notifications</p>
+        <RouterLink to="/notifications">
+          <p class="ml-3">notifications</p>
+        </RouterLink>
       </div>
     </div>
 
     <!--LOG OUT-->
     <h2 @click="logout" class="text-lg font-bold mt-20">Log out</h2>
-
   </div>
 </template>
 

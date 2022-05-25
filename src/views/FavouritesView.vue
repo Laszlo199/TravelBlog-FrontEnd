@@ -1,8 +1,6 @@
 <template>
   <div class="flex flex-col h-screen w-800 mx-auto">
-
     <div class="flex flex-row justify-between items-center mt-20 mb-4">
-
       <h1 class="text-4xl text-primary-orange font-bold">Favourite posts</h1>
 
       <div class="flex flex-row space-x-4 items-center">
@@ -23,7 +21,6 @@
       <div v-for="post in filteredPosts">
         <Post :the-post="post" :view-type="'FAVOURITEPOSTS'" @refresh="updateView"/>
       </div>
-
     </div>
   </div>
 </template>
@@ -32,7 +29,7 @@
 import {SearchIcon, SortAscendingIcon, XIcon} from "@heroicons/vue/outline";
 import Post from "@/components/Post.vue";
 import SortMenu from '@/components/SortMenu.vue';
-import {PostService} from "@/services/PostService";
+import type {PostService} from "@/services/PostService";
 import {computed, inject, ref} from "vue";
 import type {GetPostDto} from "@/Dtos/get.post.dto";
 import * as _ from "underscore";

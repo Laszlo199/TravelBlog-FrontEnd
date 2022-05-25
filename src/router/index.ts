@@ -6,9 +6,9 @@ const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/search',
-      name: 'search',
-      component: () => import('../views/SearchView.vue')
+      path: "/search",
+      name: "search",
+      component: () => import("../views/SearchView.vue"),
     },
     {
       path: "/",
@@ -26,9 +26,14 @@ const router = createRouter({
       component: () => import('../views/AddPostView.vue')
     },
     {
-      path: '/my-posts',
-      name: 'my-posts',
-      component: () => import('../views/MyPostsView.vue')
+      path: "/my-posts",
+      name: "my-posts",
+      component: () => import("../views/MyPostsView.vue"),
+    },
+    {
+      path: "/notifications",
+      name: "notifications",
+      component: () => import("../views/NotificationsView.vue"),
     },
     {
       path: '/favourite-posts',
