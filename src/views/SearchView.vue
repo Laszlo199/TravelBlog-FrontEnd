@@ -26,7 +26,7 @@
       </div>
 
       <div @click="search()"
-           class="w-1/5 py-2 px-4 bg-primary-orange cursor-pointer flex flex-row items-center text-white">
+           class="w-1/5 py-2 px-4 bg-primary-orange cursor-pointer flex flex-row items-center text-white justify-center hover:bg-button-orange">
         search
       </div>
     </div>
