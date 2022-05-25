@@ -12,7 +12,8 @@ pipeline{
            stage("build"){
                 steps{
                     dir("hello-world") {
-                        sh "/usr/bin/npm install"
+
+                        sh "npm install -g @vue/cli"
                         sh "npm install"
                         sh "npm i @vue/cli-service"
                         sh "npm run build "
