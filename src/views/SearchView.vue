@@ -24,10 +24,8 @@
       </div>
     </div>
 
-    <div class="mt-8 flex flex-col space-y-6 overflow-scroll">
+    <div class="mt-2 flex flex-col space-y-6 overflow-scroll">
       <!--TODO CHANGE FOR ACTUAL SEARCH RESULTS-->
-      <Post :the-post="testPost" :view-type="SEARCHPOSTS" />
-      <Post :the-post="testPost" :view-type="SEARCHPOSTS" />
     </div>
   </div>
 </template>

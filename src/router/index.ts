@@ -1,4 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
+import LoginView from "../views/LoginView.vue";
+import RegisterView from "../views/RegisterView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -9,9 +11,19 @@ const router = createRouter({
       component: () => import("../views/SearchView.vue"),
     },
     {
-      path: "/add-post",
-      name: "add-post",
-      component: () => import("../views/AddPostView.vue"),
+      path: "/",
+      name: "login",
+      component: LoginView,
+    },
+    {
+      path: "/register",
+      name: "register",
+      component: RegisterView,
+    },
+    {
+      path: '/add-post',
+      name: 'add-post',
+      component: () => import('../views/AddPostView.vue')
     },
     {
       path: "/my-posts",
@@ -19,16 +31,21 @@ const router = createRouter({
       component: () => import("../views/MyPostsView.vue"),
     },
     {
-      path: "/favourite-posts",
-      name: "favourite-posts",
-      component: () => import("../views/FavouritesView.vue"),
-    },
-    {
       path: "/notifications",
       name: "notifications",
       component: () => import("../views/NotificationsView.vue"),
     },
-  ],
-});
+    {
+      path: '/favourite-posts',
+      name: 'favourite-posts',
+      component: () => import('../views/FavouritesView.vue')
+    },
+    {
+      path: '/more/:id',
+      name: 'read-more',
+      component: () => import('../views/ReadMoreView.vue')
+    }
+  ]
+})
 
 export default router;

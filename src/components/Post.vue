@@ -11,51 +11,30 @@
           {{ thePost.location }}
         </p>
       </div>
-      <p class="text-sm text-primary-grey font-medium whitespace-nowrap">
-        {{ thePost.date }}
-      </p>
+      <p class="text-sm text-primary-grey font-medium whitespace-nowrap">{{ postDate }}</p>
 
-      <div
-        v-if="viewType == 'MYPOSTS'"
-        class="w-full flex flex-row justify-between"
-      >
-        <p class="text-sm text-primary-orange">
-          {{ thePost.isPrivate ? "private" : "public" }}
-        </p>
+      <!--EDIT / DELETE-->
+      <div v-if="viewType=='MYPOSTS'" class="w-full flex flex-row justify-between">
+        <p class="text-sm text-primary-orange">{{ thePost.isPrivate ? 'private' : 'public' }}</p>
         <div class="flex flex-row space-x-2">
-          <PencilAltIcon
-            @click="editPost()"
-            class="w-6 h-6 stroke-primary-grey stroke-2 cursor-pointer hover:stroke-black"
-          />
-          <TrashIcon
-            @click="deletePost()"
-            class="w-6 h-6 stroke-primary-grey stroke-2 cursor-pointer hover:stroke-black"
-          />
+          <PencilAltIcon @click="editPost()" class="w-6 h-6 stroke-primary-grey stroke-2 cursor-pointer hover:stroke-black" />
+          <TrashIcon @click="isDeleting=!isDeleting;" class="w-6 h-6 stroke-primary-grey stroke-2 cursor-pointer hover:stroke-black" />
+          <p v-if="isDeleting" @click="deletePost()" class="cursor-pointer text-primary-red hover:underline underline-offset-4">click here to delete</p>
         </div>
       </div>
     </div>
 
     <!--CONTENT-->
-    <div
-      class="flex flex-row w-full border-b-2 border-primary-grey/20 mt-2 pb-2 px-2"
-    >
-      <div class="w-2/8 h-full bg-primary-orange">img</div>
+    <div class="flex flex-row w-full border-b-2 border-primary-grey/20 mt-2 pb-2">
+      <img v-if="imgSource != ''" :src="imgSource"
+          class="w-2/8 h-full"/>
       <div class="w-5/8 flex flex-col space-y-2 ml-2">
         <h2 class="text-black text-xl font-bold">{{ thePost.title }}</h2>
-        <p v-if="thePost.description.length > 0" class="text-base text-black">
-          {{ thePost.description }}
-        </p>
-        <p
-          v-if="thePost.description.length < 200"
-          class="text-base text-black post-text-wrap"
-        >
-          {{ thePost.text }}
-        </p>
-        <p
-          class="text-base text-medium text-primary-orange font-medium cursor-pointer"
-        >
-          Read more
-        </p>
+        <p v-if="thePost.description.length>0" class="text-base text-black">{{ thePost.description }}</p>
+        <p v-if="thePost.description.length<200" class="text-base text-black post-text-wrap italic">{{ thePost.text }}</p>
+        <RouterLink :to="{ name: 'read-more', params: { id: thePost.id } }">
+          <p class="text-base text-medium text-primary-orange font-medium cursor-pointer">Read more</p>
+        </RouterLink>
       </div>
     </div>
 
@@ -104,11 +83,8 @@
           <p class="text-primary-grey">{{ todaysDate }}</p>
         </div>
 
-        <input
-          v-model="newComment"
-          placeholder="Type your comment here..."
-          class="text-sm text-black focus:outline-none w-full"
-        />
+        <input type="text" v-model="newComment" placeholder="Type your comment here..."
+               class="text-sm text-black focus:outline-none w-full" />
       </div>
 
       <div class="flex flex-row space-x-2 items-center">
@@ -132,8 +108,8 @@
 
     <!--COMMENTS-->
     <div class="w-full max-h-36 overflow-y-auto">
-      <div v-for="comment in thePost.comments">
-        <Comment :the-comment="comment" />
+      <div v-for="comment in _.sortBy(thePost.comments,['date']).reverse()">
+        <Comment :the-comment="comment"/>
       </div>
     </div>
   </div>
@@ -150,16 +126,18 @@ import {
   PencilAltIcon,
 } from "@heroicons/vue/outline";
 import Comment from "@/components/Comment.vue";
-import { computed, inject, ref, toRefs } from "vue";
-import type { GetPostDto } from "@/Dtos/get.post.dto";
-import { PostService } from "@/services/PostService";
-import { CommentService } from "@/services/CommentService";
-import { NotificationsStore } from "@/stores/notifications";
+import {computed, inject, ref, toRefs} from "vue";
+import type {GetPostDto} from "@/Dtos/get.post.dto";
+import {PostService} from "@/services/PostService";
+import {CommentService} from "@/services/CommentService";
+import moment from "moment";
+import * as _ from "underscore";
+import { AuthStore } from "@/stores/auth.store";
 
 const commentService = inject<CommentService>("commentService");
 const postService = inject<PostService>("postService");
-
-const userId = "626ed3f991384128af52ad1b"; //TODO get actual user id when login implemented
+const authStore = AuthStore();
+const userId = authStore.getUserid; //TODO get actual user id when login implemented
 
 const props = defineProps<{
   thePost: GetPostDto;
@@ -171,15 +149,35 @@ const emit = defineEmits(["refresh"]);
 
 const newComment = ref("");
 const isCommentPanelOpen = ref(false);
-const notificationsStore =NotificationsStore();
-const todaysDate = computed(() => {
+const notificationsStore = NotificationsStore();
+const isDeleting = ref(false);
+const todaysDate = computed( () => {
   const now = new Date();
   return now.toLocaleDateString();
 });
 
+const base64String = (props.thePost.photo) ?
+    props.thePost.photo : '';
+const data_url = (base64String!='') ? "data:image/png;base64," + base64String : '';
+const imgSource = ref(data_url);
+
+const postDate = computed( () => {
+  return moment(String(props.thePost.date)).format('DD/MM/YYYY');
+});
+
+function sendNotification(type: string) {
+  let noti = {
+    postName: props.thePost.title,
+    userId: userId,
+    userName: "user",
+    notificationType: type,
+    date: new Date(Date.now()),
+    text: newComment.value
+  };
+  notificationsStore.createNotification(noti);
+}
+
 function submitComment(postId: string) {
-
-
   commentService
     ?.createComment({
       userId: userId,
@@ -200,32 +198,20 @@ function submitComment(postId: string) {
     });
 }
 
-function sendNotification(type: string) {
-  let noti = {
-    postName: props.thePost.title,
-    userId: userId,
-    userName: "user",
-    notificationType: type,
-    date: new Date(Date.now()),
-    text: newComment.value
-  };
-  notificationsStore.createNotification(noti);
-}
-
-
-
 function editPost() {
   //TODO implement edit post
 }
 
 function deletePost() {
-  //TODO implement delete posts
+  postService?.deletePost(props.thePost.id).then((result) => {
+    if(result.data) {
+      isDeleting.value = false;
+      emit('refresh');
+    }
+  });
 }
 
-
-/**
- * actually it adds post favourites
- */
+//adds to favourites
 function likePost() {
   postService?.likePost({ userId: userId, postId: props.thePost.id })
   .then(()=>{

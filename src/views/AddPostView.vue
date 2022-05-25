@@ -56,6 +56,15 @@
       ></textarea>
     </div>
 
+    <!--FILE UPLOAD-->
+    <input
+      @change="onFileSelected($event)"
+      type="file"
+      accept="image/*"
+      class="mb-4 file:bg-white file:border-none hover:file:text-primary-orange hover:file:cursor-pointer"
+    />
+
+    <!--BUTTON-->
     <button
       @click="submitPost()"
       :disabled="isCreated"
@@ -76,16 +85,19 @@
 <script setup lang="ts">
 import { LocationMarkerIcon } from "@heroicons/vue/outline";
 import { inject, ref } from "vue";
-import type { PostService } from "@/services/PostService";
+import { PostService } from "@/services/PostService";
+import { AuthStore } from "@/stores/auth.store";
 
 const postService = inject<PostService>("postService");
-const userId = "626ed3f991384128af52ad1b"; //TODO get actual user id when login implemented
+const authStore = AuthStore();
+const userId = authStore.getUserid;
 
 const title = ref("");
 const description = ref("");
 const text = ref("");
 const isPrivate = ref(false);
 const location = ref("");
+let photo: File;
 
 const isCreated = ref(false);
 
@@ -95,18 +107,27 @@ function submitPost() {
     text.value.length > 2 &&
     location.value.length > 2
   ) {
+    const fd = new FormData();
+    fd.append("file", photo, photo.name);
     postService
-      ?.createPost({
-        userId: userId,
-        title: title.value,
-        description: description.value,
-        text: text.value,
-        isPrivate: isPrivate.value,
-        location: location.value,
-        date: new Date(),
-      })
+      ?.createPost(
+        {
+          userId: userId,
+          title: title.value,
+          description: description.value,
+          text: text.value,
+          isPrivate: isPrivate.value,
+          location: location.value,
+          date: new Date(),
+        },
+        fd
+      )
       .then(() => (isCreated.value = true));
   }
+}
+
+function onFileSelected(event: Event) {
+  photo = event?.target?.files[0];
 }
 </script>
 
