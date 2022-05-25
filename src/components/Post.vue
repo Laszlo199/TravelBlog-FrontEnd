@@ -159,7 +159,7 @@ import { NotificationsStore } from "@/stores/notifications";
 const commentService = inject<CommentService>("commentService");
 const postService = inject<PostService>("postService");
 
-const userId = "6283639e5f1e8c4361970d07"; //TODO get actual user id when login implemented
+const userId = "626ed3f991384128af52ad1b"; //TODO get actual user id when login implemented
 
 const props = defineProps<{
   thePost: GetPostDto;
