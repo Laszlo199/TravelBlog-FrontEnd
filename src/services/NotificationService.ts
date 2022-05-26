@@ -14,7 +14,6 @@ export class NotificationService{
   }
 
   createNotification(notification: PostNotificationDto) {
-    console.log("we hit at least there!");
     this.socket.emit("createNotification", notification);
   }
 
