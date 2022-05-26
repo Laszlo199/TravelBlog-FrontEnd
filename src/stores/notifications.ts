@@ -20,7 +20,7 @@ export const NotificationsStore = defineStore({
 
     setUser(userId: string) {
       console.log("user Id: " + userId);
-      console.log("listening to nitifications");
+      console.log("listening to notifications");
       //if (this.userId) notificationService.disconnect(this.userId);
       this.userId = userId;
       this.notifications = [];

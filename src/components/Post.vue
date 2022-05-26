@@ -216,6 +216,7 @@ function deletePost() {
 function savePost() {
   postService?.savePost({userId: userId, postId: props.thePost.id})
       .then((result) => {
+        sendNotification('favourite')
         postService?.isFavourite({userId: userId, postId: props.thePost.id} )
           .then((result: boolean) => isFav.value = result)
           .catch((error)=>console.log("error: "+error))
@@ -224,8 +225,12 @@ function savePost() {
 }
 
 function thumbsUp() {
+
   postService?.thumbsUp({userId: userId, postId: props.thePost.id})
-      .then((result) => emit('refresh'))
+      .then((result) => {
+        emit('refresh')
+        sendNotification('like')
+      })
       .catch((error) => console.log("error: " + error));
 }
 
