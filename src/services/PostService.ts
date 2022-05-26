@@ -29,7 +29,7 @@ export class PostService {
   }
 
   getPost(id: string): Promise<GetPostDto> {
-    return this.http.get("/posts/" + id);
+    return this.http.get("/posts/getOne/" + id);
   }
 
   //adds to favourites
