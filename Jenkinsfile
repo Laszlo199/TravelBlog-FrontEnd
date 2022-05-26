@@ -60,7 +60,7 @@ pipeline{
              }
              stage("Push to registry") {
                 steps {
-                    sh "docker-compose --env-file Config/Test.env push"
+                    sh "docker-compose --env-file config/Test.env push"
                 }
                 post{
                     always {
