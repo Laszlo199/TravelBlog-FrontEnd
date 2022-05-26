@@ -8,5 +8,3 @@ services:
     container_name: "${CONT_NAME}"
     ports:
       - "${API_PORT}:80"
-    links:
-      - sqs:original-name
