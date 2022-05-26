@@ -4,6 +4,6 @@ services:
   web:
     build:
       context: .
-    container_name: "${CONT_NAME}"
+    container_name: "travel-blog-container"
     ports:
-      - "${API_PORT}:80"
+      - "8090:80"

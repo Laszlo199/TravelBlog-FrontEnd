@@ -1,12 +1,12 @@
 pipeline {
     agent any
     parameters {
-        run filter: 'SUCCESSFUL', name: 'PROMOTED_BUILD', projectName: 'WeatherForecast'
+        run filter: 'SUCCESSFUL', name: 'PROMOTED_BUILD', projectName: 'FlashcardsFrontend'
     }
     stages {
         stage("Deploy to production") {
             steps {
-                sh "docker-compose --env-file config/Prod.env pull"
+                sh "docker-compose --env-file config/Prod.env down"
                 sh "docker-compose --env-file config/Prod.env up -d"
             }
         }
