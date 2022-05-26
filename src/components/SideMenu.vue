@@ -50,8 +50,11 @@
            :class="{'text-primary-orange': openLabel=='NOTIFICATIONS',  'hover:text-primary-orange': openLabel=='NOTIFICATIONS'}"
            class="flex flex-row items-center hover:cursor-pointer hover:text-primary-grey text-black">
         <BellIcon class="w-4 h-4"/>
+        <div v-if="notificationsStore.notifications.length>0"
+             class="w-4 h-4 rounded-full bg-primary-red relative text-white text-xs align-text-center right-2 top-2 flex justify-center">
+          {{notificationsStore.notifications.length}}</div>
         <RouterLink to="/notifications">
-          <p class="ml-3">notifications</p>
+          <p :class="{ 'ml-3': notificationsStore.notifications.length==0 }">notifications</p>
         </RouterLink>
       </div>
     </div>
@@ -73,10 +76,12 @@ import {
 } from "@heroicons/vue/outline";
 import { AuthStore } from "@/stores/auth.store";
 import {ref} from "vue";
+import {NotificationsStore} from "@/stores/notifications";
 
 //SEARCH / ADDPOST / MYPOSTS / FAVOURITES / NOTIFICATIONS
 const openLabel = ref("SEARCH")
 
+const notificationsStore =  NotificationsStore()
 const authStore = AuthStore();
 
 function logout() {
