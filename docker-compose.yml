@@ -3,7 +3,7 @@ version: "3.3"
 services:
   web:
     build:
-      context: "TravelBlog-FrontEnd"
+      context: "travel-blog-frontend"
     container_name: "travel-blog-container"
     ports:
       - "8090:80"
