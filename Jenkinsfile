@@ -17,6 +17,7 @@ pipeline{
                         sh "npm install"
                         sh "npm i @vue/cli-service"
                         sh "npm run build "
+                         sh "docker-compose --env-file config/Test.env build "
 
                     }
                 }
