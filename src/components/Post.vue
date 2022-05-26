@@ -1,11 +1,15 @@
 <template>
   <div class="w-800 flex flex-col px-4 py-2 bg-white">
     <!--TOP BAR-->
-    <div class="w-full flex flex-row space-x-10 pb-2 px-2 border-b-2 border-primary-grey/20 items-center">
+    <div
+      class="w-full flex flex-row space-x-10 pb-2 px-2 border-b-2 border-primary-grey/20 items-center"
+    >
       <p class="text-sm text-black font-medium">{{ thePost.username }}</p>
       <div class="flex flex-row items-center space-x-2">
         <LocationMarkerIcon class="w-4 h-4 stroke-primary-grey stroke-2" />
-        <p class="text-sm text-primary-grey font-medium">{{ thePost.location }}</p>
+        <p class="text-sm text-primary-grey font-medium">
+          {{ thePost.location }}
+        </p>
       </div>
       <p class="text-sm text-primary-grey font-medium whitespace-nowrap">{{ postDate }}</p>
 
@@ -35,14 +39,19 @@
     </div>
 
     <!--ACTIONS-->
-    <div class="w-full flex flex-row justify-between border-b-2 border-primary-grey/20 mt-2 pb-2 px-2">
+    <div
+      class="w-full flex flex-row justify-between border-b-2 border-primary-grey/20 mt-2 pb-2 px-2"
+    >
       <div class="flex flex-row space-x-2 items-center">
         <div @click="savePost()" class="flex flex-row space-x-2 items-center mr-2 text-primary-grey stroke-primary-grey hover:stroke-black cursor-pointer hover:text-black">
           <HeartIcon v-bind:class="{ 'fill-primary-grey': (viewType=='FAVOURITEPOSTS' || isFav) }" class="w-5 h-5"/>
           <p class="text-base">favourite</p>
         </div>
-        <div @click="isCommentPanelOpen=true;" class="flex flex-row space-x-2 items-center text-primary-grey stroke-primary-grey hover:stroke-black cursor-pointer hover:text-black">
-          <AnnotationIcon class="w-5 h-5"/>
+        <div
+          @click="isCommentPanelOpen = true"
+          class="flex flex-row space-x-2 items-center text-primary-grey stroke-primary-grey hover:stroke-black cursor-pointer hover:text-black"
+        >
+          <AnnotationIcon class="w-5 h-5" />
           <p class="text-base">comment</p>
         </div>
       </div>
@@ -57,11 +66,14 @@
     </div>
 
     <!--TYPE COMMENT-->
-    <div v-if="isCommentPanelOpen" class="w-full flex flex-row p-2 justify-between">
+    <div
+      v-if="isCommentPanelOpen"
+      class="w-full flex flex-row p-2 justify-between"
+    >
       <div class="flex flex-col w-full">
         <div class="flex flex-row text-sm">
           <p class="font-medium text-black">you</p>
-          <p class="px-1"> · </p>
+          <p class="px-1">·</p>
           <p class="text-primary-grey">{{ todaysDate }}</p>
         </div>
 
@@ -70,8 +82,21 @@
       </div>
 
       <div class="flex flex-row space-x-2 items-center">
-        <button @click="submitComment(thePost.id);" class="bg-primary-orange text-white py-1 px-2 text-sm h-3/4">send</button>
-        <button @click="isCommentPanelOpen=false; newComment=''; " class="bg-primary-grey text-white py-1 px-2 text-sm h-3/4">cancel</button>
+        <button
+          @click="submitComment(thePost.id); sendNotification('comment')"
+          class="bg-primary-orange text-white py-1 px-2 text-sm h-3/4"
+        >
+          send
+        </button>
+        <button
+          @click="
+            isCommentPanelOpen = false;
+            newComment = '';
+          "
+          class="bg-primary-grey text-white py-1 px-2 text-sm h-3/4"
+        >
+          cancel
+        </button>
       </div>
     </div>
 
@@ -81,13 +106,19 @@
         <Comment :the-comment="comment"/>
       </div>
     </div>
-
   </div>
-
 </template>
 
 <script setup lang="ts">
-import {LocationMarkerIcon, HeartIcon, AnnotationIcon, ThumbDownIcon, ThumbUpIcon, TrashIcon, PencilAltIcon} from "@heroicons/vue/outline";
+import {
+  LocationMarkerIcon,
+  HeartIcon,
+  AnnotationIcon,
+  ThumbDownIcon,
+  ThumbUpIcon,
+  TrashIcon,
+  PencilAltIcon,
+} from "@heroicons/vue/outline";
 import Comment from "@/components/Comment.vue";
 import {computed, inject, ref, toRefs} from "vue";
 import type {GetPostDto} from "@/Dtos/get.post.dto";
@@ -96,19 +127,22 @@ import type {CommentService} from "@/services/CommentService";
 import moment from "moment";
 import * as _ from "underscore";
 import {result} from "underscore";
+import { AuthStore } from "@/stores/auth.store";
+import { NotificationsStore } from "@/stores/notifications";
 
 const commentService = inject<CommentService>("commentService");
 const postService = inject<PostService>("postService");
-const userId = "626ed3f991384128af52ad1b"; //TODO get actual user id when login implemented
+const authStore = AuthStore();
+const userId = authStore.getUserid;
 const isFav = ref(false);
 
 const props = defineProps<{
-  thePost:GetPostDto
+  thePost: GetPostDto;
   //depending on the view type (my posts / search posts) we get different elements in post component
-  viewType:string
+  viewType: string;
 }>();
 
-const emit = defineEmits(['refresh'])
+const emit = defineEmits(["refresh"]);
 
 postService?.isFavourite({userId: userId, postId: props.thePost.id} )
     .then((result: boolean) => isFav.value = result)
@@ -116,6 +150,7 @@ postService?.isFavourite({userId: userId, postId: props.thePost.id} )
 
 const newComment = ref("");
 const isCommentPanelOpen = ref(false);
+const notificationsStore = NotificationsStore();
 const isDeleting = ref(false);
 const todaysDate = computed( () => {
   const now = new Date();
@@ -131,21 +166,37 @@ const postDate = computed( () => {
   return moment(String(props.thePost.date)).format('DD/MM/YYYY');
 });
 
-function submitComment(postId: string) {
-  commentService?.createComment({
+function sendNotification(type: string) {
+  let noti = {
+    postName: props.thePost.title,
     userId: userId,
-    postId: postId,
-    date: new Date(),
+    userName: "user",
+    notificationType: type,
+    date: new Date(Date.now()),
     text: newComment.value
-  }).then((result) => {
-    if(result==true) {
-      isCommentPanelOpen.value=false;
-      newComment.value='';
-      emit('refresh');
-    }
-  }).catch((error) => {
-    console.log('error: ' + error)
-  });
+  };
+  notificationsStore.createNotification(noti);
+}
+
+function submitComment(postId: string) {
+  commentService
+    ?.createComment({
+      userId: userId,
+      postId: postId,
+      date: new Date(),
+      text: newComment.value,
+    })
+    .then((result) => {
+      if (result == true) {
+        isCommentPanelOpen.value = false;
+        newComment.value = "";
+        emit("refresh");
+
+      }
+    })
+    .catch((error) => {
+      console.log("error: " + error);
+    });
 }
 
 function editPost() {
@@ -184,10 +235,10 @@ function thumbsDown() {
       .catch((error) => console.log("error: " + error));
 }
 
+
 </script>
 
 <style scoped>
-
 .post-text-wrap {
   overflow: hidden;
   text-overflow: ellipsis;
