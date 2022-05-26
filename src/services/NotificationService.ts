@@ -3,7 +3,7 @@ import type { PostNotificationDto } from "@/Dtos/notification/PostNotificationDt
 
 
 export class NotificationService{
-  socket = io("localhost:3001");
+  socket = io(import.meta.env.VITE_API_ENDPOINT);
 
   constructor() {
     this.socket.connect();

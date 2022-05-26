@@ -2,26 +2,20 @@ import axios from "axios";
 import type { CreatePostDto } from "@/Dtos/create.post.dto";
 import type { LikePostDto } from "@/Dtos/like.post.dto";
 import type { GetPostDto } from "@/Dtos/get.post.dto";
+import http from "./http.client";
 
 export class PostService {
-  http = axios.create({
-    baseURL: "http://localhost:3001",
-    headers: {
-      "content-type": "application/json",
-    },
-  });
-
   getAllPosts(id: string) {
-    return this.http.get("/posts/own/userId/" + id);
+    return http.get("/posts/own/userId/" + id);
   }
 
   getAllFavouritePosts(id: string) {
-    return this.http.get("/posts/liked/userId/" + id);
+    return http.get("/posts/liked/userId/" + id);
   }
 
   async createPost(post: CreatePostDto, file: FormData) {
-    const createdPost = await this.http.post<string>("/posts", post);
-    const result = await this.http.post<string>(
+    const createdPost = await http.post<string>("/posts", post);
+    const result = await http.post<string>(
           "/posts/file/" + createdPost.data,
           file
     );
@@ -29,32 +23,32 @@ export class PostService {
   }
 
   getPost(id: string): Promise<GetPostDto> {
-    return this.http.get("/posts/getOne/" + id);
+    return http.get("/posts/getOne/" + id);
   }
 
   //adds to favourites
   async savePost(like: LikePostDto) {
-    await this.http.post<boolean>("/posts/like", like);
+    await http.post<boolean>("/posts/like", like);
   }
 
   async deletePost(postId: string) {
-    return await this.http.delete<boolean>("/posts/" + postId);
+    return await http.delete<boolean>("/posts/" + postId);
   }
 
   async search(keyword: string, location: string) {
-    return await this.http.get<GetPostDto[]>("/posts/search?keyword=" + keyword + "&location=" + location);
+    return await http.get<GetPostDto[]>("/posts/search?keyword=" + keyword + "&location=" + location);
   }
 
   async thumbsUp(action: LikePostDto) {
-    return await this.http.post<boolean>("/posts/up", action);
+    return await http.post<boolean>("/posts/up", action);
   }
 
   async thumbsDown(action: LikePostDto) {
-    return await this.http.post<boolean>("/posts/down", action);
+    return await http.post<boolean>("/posts/down", action);
   }
 
   async isFavourite(dto: LikePostDto) {
-    const res = await this.http.post<boolean>("/posts/isfavourite", dto);
+    const res = await http.post<boolean>("/posts/isfavourite", dto);
     return res.data;
   }
 }
