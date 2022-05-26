@@ -148,7 +148,7 @@ const imgSource = ref('');
 
 if (typeof postId === "string") {
   postService?.getPost(postId).then((result) => {
-    thePost.value = result.data;
+    thePost.value = result;
     const base64String = thePost.value.photo ? thePost.value.photo : "";
     const data_url =
         base64String != "" ? "data:image/png;base64," + base64String : "";
@@ -188,6 +188,7 @@ function submitComment(postId: string) {
 
 //adds to favourites
 function savePost() {
+  if (typeof postId === "string")
   postService?.savePost({ userId: thePost.value.userId, postId: postId });
 }
 

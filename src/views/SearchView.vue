@@ -53,13 +53,15 @@
 import { SearchIcon, LocationMarkerIcon } from "@heroicons/vue/outline";
 import Post from "@/components/Post.vue";
 import {inject, ref} from "vue";
+import type {Ref} from "vue";
 import type {PostService} from "@/services/PostService";
+import type { GetPostDto } from "@/Dtos/get.post.dto";
 
 const postService = inject<PostService>("postService");
 const keyword = ref('');
 const location = ref('');
 const isLoading = ref(false);
-const posts = ref([]);
+const posts: Ref<GetPostDto[]> = ref([]);
 
 function search() {
   if(keyword.value!='' && location.value!='') {

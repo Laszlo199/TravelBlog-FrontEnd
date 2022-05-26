@@ -10,8 +10,8 @@
             Notifications
           </h1>
         </div >
-        <div  v-for="(n, i) in notificationsStore.notifications" >
-          <notification  @remove='remove(i)' @redirect="redirect()" :the-notification="n" :key="n.date" ></notification>
+        <div  v-for="(n, i) in notificationsStore.notifications" v-bind:key="i" >
+          <notification  @remove='remove(i)' @redirect="redirect()" :the-notification="n"></notification>
         </div>
       </div>
 

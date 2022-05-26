@@ -46,7 +46,7 @@
     <!-- take all of the left space - Buttons -->
     <div class="flex flex-row items-center gap-4 mr-4">
         <ArrowRightIcon @click="$emit('redirect')" class="h-6 w-6 hover:opacity-40 opacity-90 cursor-pointer" />
-        <XIcon @click="$emit('remove', i)" class="w-6 h-6 hover:opacity-40 opacity-90 cursor-pointer"></XIcon>
+        <XIcon @click="$emit('remove')" class="w-6 h-6 hover:opacity-40 opacity-90 cursor-pointer"></XIcon>
     </div>
   </div>
 </template>

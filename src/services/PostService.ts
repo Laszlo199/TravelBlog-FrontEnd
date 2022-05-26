@@ -22,8 +22,9 @@ export class PostService {
     return result.data;
   }
 
-  getPost(id: string): Promise<GetPostDto> {
-    return http.get("/posts/getOne/" + id);
+  async getPost(id: string): Promise<GetPostDto> {
+    const result = await http.get("/posts/getOne/" + id);
+    return result.data;
   }
 
   //adds to favourites

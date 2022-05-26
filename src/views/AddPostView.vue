@@ -133,7 +133,9 @@ function submitPost() {
 }
 
 function onFileSelected(event: Event) {
-  photo = event?.target?.files[0];
+  const target = event.target as HTMLInputElement;
+  if(target.files)
+    photo = target?.files[0];
 }
 </script>
 
