@@ -9,17 +9,14 @@ pipeline{
         nodejs "18.1.0"
     }
      stages{
-           stage("build"){
-                steps{
-                    dir("hello-world") {
+           stage("Build"){
+                steps {
 
-                        sh "npm install -g @vue/cli"
-                        sh "npm install"
-                        sh "npm i @vue/cli-service"
-                        sh "npm run build "
-                         sh "docker-compose --env-file config/Test.env build "
+                    sh "npm install -g @vue/cli"
+                    sh "npm install"
+                    sh "npm i @vue/cli-service"
+                    sh "npm run build "
 
-                    }
                 }
                 post{
                     always {
@@ -34,12 +31,7 @@ pipeline{
                 }
               }
 
-              stage("test"){
-                steps{
-                    sh "echo 'some tests'" // to add later
-                }
-              }
-              stage("Clean container"){
+              stage("Clean container") {
                 steps{
                     script{
                         try{
@@ -66,5 +58,21 @@ pipeline{
                             }
                      }
              }
+             stage("Push to registry") {
+                steps {
+                    sh "docker-compose --env-file config/Test.env push"
+                }
+                post{
+                    always {
+                        sh "echo 'Pushing to registry finished'"
+                    }
+                    success {
+                        sh "echo 'Pushing to registry succeeded'"
+                    }
+                    failure {
+                        sh "echo 'Pushing to registry failed'"
+                    }
+                }
+          }
      }
 }
