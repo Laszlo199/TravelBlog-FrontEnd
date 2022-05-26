@@ -41,6 +41,10 @@ export class PostService {
     return await this.http.delete<boolean>("/posts/" + postId);
   }
 
+  async search(keyword: string, location: string) {
+    return await this.http.get<GetPostDto[]>("/posts/search?keyword=" + keyword + "&location=" + location);
+  }
+
   async thumbsUp(action: LikePostDto) {
     return await this.http.post<boolean>("/posts/up", action);
   }
