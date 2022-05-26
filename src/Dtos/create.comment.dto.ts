@@ -1,6 +1,6 @@
 export interface CreateCommentDto {
-    userId: string;
-    postId: string;
-    date: Date;
-    text: string;
+  userId: string;
+  postId: string;
+  date: Date;
+  text: string;
 }
