@@ -31,7 +31,7 @@ pipeline{
                 }
               }
 
-              stage("Clean container"){
+              stage("Clean container") {
                 steps{
                     script{
                         try{
@@ -58,5 +58,21 @@ pipeline{
                             }
                      }
              }
+             stage("Push to registry") {
+                steps {
+                    sh "docker-compose --env-file Config/Test.env push"
+                }
+                post{
+                    always {
+                        sh "echo 'Pushing to registry finished'"
+                    }
+                    success {
+                        sh "echo 'Pushing to registry succeeded'"
+                    }
+                    failure {
+                        sh "echo 'Pushing to registry failed'"
+                    }
+                }
+          }
      }
 }
