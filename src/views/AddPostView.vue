@@ -73,11 +73,15 @@
       send
     </button>
 
+    <!--FEEDBACK-->
     <div
       v-if="isCreated"
-      class="text-lg text-primary-orange font-medium w-full text-center"
+      class="font-medium w-full text-center"
     >
-      Your post has been created!
+      <p class="italic text-sm text-primary-grey">Your post has been created!</p>
+      <RouterLink :to="{ name: 'read-more', params: { id: newId } }">
+        <p class="hover:underline underline-offset-4 text-black cursor-pointer py-1 px-2 text-lg">Go to post</p>
+      </RouterLink>
     </div>
   </div>
 </template>
@@ -87,6 +91,7 @@ import { LocationMarkerIcon } from "@heroicons/vue/outline";
 import { inject, ref } from "vue";
 import { PostService } from "@/services/PostService";
 import { AuthStore } from "@/stores/auth.store";
+
 
 const postService = inject<PostService>("postService");
 const authStore = AuthStore();
@@ -100,6 +105,7 @@ const location = ref("");
 let photo: File;
 
 const isCreated = ref(false);
+const newId = ref('');
 
 function submitPost() {
   if (
@@ -108,21 +114,22 @@ function submitPost() {
     location.value.length > 2
   ) {
     const fd = new FormData();
-    fd.append("file", photo, photo.name);
+    if(photo && photo.name) fd.append('file', photo, photo.name)
+
     postService
-      ?.createPost(
-        {
-          userId: userId,
-          title: title.value,
-          description: description.value,
-          text: text.value,
-          isPrivate: isPrivate.value,
-          location: location.value,
-          date: new Date(),
-        },
-        fd
-      )
-      .then(() => (isCreated.value = true));
+      ?.createPost({
+        userId: userId,
+        title: title.value,
+        description: description.value,
+        text: text.value,
+        isPrivate: isPrivate.value,
+        location: location.value,
+        date: new Date(),
+      }, fd)
+      .then((result: string) => {
+        newId.value = result;
+        isCreated.value = true;
+      });
   }
 }
 
