@@ -9,16 +9,14 @@ pipeline{
         nodejs "18.1.0"
     }
      stages{
-           stage("build"){
-                steps{
-                    dir("hello-world") {
-
-                        sh "npm install -g @vue/cli"
-                        sh "npm install"
-                        sh "npm i @vue/cli-service"
-                        sh "npm run build "
-
-                    }
+           stage("Build"){
+                steps {
+                    
+                    sh "npm install -g @vue/cli"
+                    sh "npm install"
+                    sh "npm i @vue/cli-service"
+                    sh "npm run build "
+                   
                 }
                 post{
                     always {
@@ -33,11 +31,6 @@ pipeline{
                 }
               }
 
-              stage("test"){
-                steps{
-                    sh "echo 'some tests'" // to add later
-                }
-              }
               stage("Clean container"){
                 steps{
                     script{
