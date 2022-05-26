@@ -28,7 +28,7 @@
         <div
           class="flex flex-row w-full border-b-2 border-primary-grey/20 mt-2 pb-2 px-2"
         >
-          <img v-if="imgSource != ''" :src="imgSource" class="w-2/8 h-full" />
+          <img v-if="imgSource != ''" :src="imgSource" class="w-2/8 h-full pr-2" />
 
           <div class="w-5/8 flex flex-col space-y-2">
             <h2 class="text-black text-xl font-bold">{{ thePost.title }}</h2>
@@ -47,7 +47,7 @@
         >
           <div class="flex flex-row space-x-2 items-center">
             <div
-              @click="likePost()"
+              @click="savePost()"
               class="flex flex-row space-x-2 items-center mr-2 text-primary-grey stroke-primary-grey hover:stroke-black cursor-pointer hover:text-black"
             >
               <HeartIcon class="w-5 h-5" />
@@ -187,8 +187,8 @@ function submitComment(postId: string) {
 }
 
 //adds to favourites
-function likePost() {
-  postService?.likePost({ userId: thePost.value.userId, postId: postId });
+function savePost() {
+  postService?.savePost({ userId: thePost.value.userId, postId: postId });
 }
 
 function goBack() {

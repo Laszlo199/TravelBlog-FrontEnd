@@ -43,14 +43,8 @@
       class="w-full flex flex-row justify-between border-b-2 border-primary-grey/20 mt-2 pb-2 px-2"
     >
       <div class="flex flex-row space-x-2 items-center">
-        <div
-          @click="likePost();"
-          class="flex flex-row space-x-2 items-center mr-2 text-primary-grey stroke-primary-grey hover:stroke-black cursor-pointer hover:text-black"
-        >
-          <HeartIcon
-            v-bind:class="{ 'fill-primary-grey': viewType == 'FAVOURITEPOSTS' }"
-            class="w-5 h-5"
-          />
+        <div @click="savePost()" class="flex flex-row space-x-2 items-center mr-2 text-primary-grey stroke-primary-grey hover:stroke-black cursor-pointer hover:text-black">
+          <HeartIcon v-bind:class="{ 'fill-primary-grey': (viewType=='FAVOURITEPOSTS' || isFav) }" class="w-5 h-5"/>
           <p class="text-base">favourite</p>
         </div>
         <div
@@ -64,9 +58,9 @@
 
       <!--LIKES-->
       <div class="flex flex-row space-x-2 items-center">
-        <ThumbUpIcon  class="w-5 h-5 stroke-primary-grey cursor-pointer" />
+        <ThumbUpIcon @click="thumbsUp()" class="w-5 h-5 stroke-primary-grey cursor-pointer"/>
         <p class="text-base text-primary-grey">{{ thePost.likes }}</p>
-        <ThumbDownIcon class="w-5 h-5 stroke-primary-grey cursor-pointer" />
+        <ThumbDownIcon @click="thumbsDown()" class="w-5 h-5 stroke-primary-grey cursor-pointer"/>
         <p class="text-base text-primary-grey">{{ thePost.dislikes }}</p>
       </div>
     </div>
@@ -128,10 +122,11 @@ import {
 import Comment from "@/components/Comment.vue";
 import {computed, inject, ref, toRefs} from "vue";
 import type {GetPostDto} from "@/Dtos/get.post.dto";
-import type { PostService } from "@/services/PostService";
-import type { CommentService } from "@/services/CommentService";
+import type {PostService} from "@/services/PostService";
+import type {CommentService} from "@/services/CommentService";
 import moment from "moment";
 import * as _ from "underscore";
+import {result} from "underscore";
 import { AuthStore } from "@/stores/auth.store";
 import { NotificationsStore } from "@/stores/notifications";
 
@@ -139,6 +134,7 @@ const commentService = inject<CommentService>("commentService");
 const postService = inject<PostService>("postService");
 const authStore = AuthStore();
 const userId = authStore.getUserid;
+const isFav = ref(false);
 
 const props = defineProps<{
   thePost: GetPostDto;
@@ -147,6 +143,10 @@ const props = defineProps<{
 }>();
 
 const emit = defineEmits(["refresh"]);
+
+postService?.isFavourite({userId: userId, postId: props.thePost.id} )
+    .then((result: boolean) => isFav.value = result)
+    .catch((error)=>console.log("error: "+error))
 
 const newComment = ref("");
 const isCommentPanelOpen = ref(false);
@@ -213,11 +213,26 @@ function deletePost() {
 }
 
 //adds to favourites
-function likePost() {
-  postService?.likePost({ userId: userId, postId: props.thePost.id })
-  .then(()=>{
-    sendNotification('favourite')
-  });
+function savePost() {
+  postService?.savePost({userId: userId, postId: props.thePost.id})
+      .then((result) => {
+        postService?.isFavourite({userId: userId, postId: props.thePost.id} )
+          .then((result: boolean) => isFav.value = result)
+          .catch((error)=>console.log("error: "+error))
+      })
+      .catch((error) => console.log("error: " + error));
+}
+
+function thumbsUp() {
+  postService?.thumbsUp({userId: userId, postId: props.thePost.id})
+      .then((result) => emit('refresh'))
+      .catch((error) => console.log("error: " + error));
+}
+
+function thumbsDown() {
+  postService?.thumbsDown({userId: userId, postId: props.thePost.id})
+      .then((result) => emit('refresh'))
+      .catch((error) => console.log("error: " + error));
 }
 
 
