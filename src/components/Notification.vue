@@ -1,7 +1,7 @@
 <template>
   <!-- content wrapper  -->
   <div
-    class="flex flex-row w-full mx-auto bg-white overflow-hidden p-4 justify-between"
+    class=" my-5 flex flex-row w-full mx-auto bg-white overflow-hidden p-4 justify-between"
   >
 
     <!-- info 1    -->

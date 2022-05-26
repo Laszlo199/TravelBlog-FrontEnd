@@ -63,12 +63,14 @@
 import { ref } from "vue";
 import { AuthStore } from "@/stores/auth.store";
 import router from "@/router";
+import { NotificationsStore } from "@/stores/notifications";
 
 const inputUserName = ref("");
 const inputPassword = ref("");
 const errorMessage = ref(false);
 const message = ref("");
 const authStore = AuthStore();
+const notifications = NotificationsStore();
 
 function loginUser() {
   if (inputPassword.value == "" || inputUserName.value == "") {
@@ -80,6 +82,8 @@ function loginUser() {
       .loginUser(inputUserName.value, inputPassword.value)
       .then((response) => {
         router.push({ path: "/search" });
+        const userId = authStore.getUserid;
+        notifications.setUser(userId)
       })
       .catch((error) => {
         console.log(error);

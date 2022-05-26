@@ -50,7 +50,6 @@ import * as _ from "underscore";
 import type { GetPostDto } from "@/Dtos/get.post.dto";
 import { AuthStore } from "@/stores/auth.store";
 
-const notifications = NotificationsStore();
 const postService = inject<PostService>("postService");
 const authStore = AuthStore();
 const userId = authStore.getUserid;
@@ -58,9 +57,7 @@ const userId = authStore.getUserid;
 const posts = ref([]);
 const searchInput = ref("");
 
-function listenNotifications() {
-  //notifications.setUser(userId);
-}
+
 const isSearch = ref(false);
 const sortType = ref("");
 
@@ -68,7 +65,7 @@ const sortType = ref("");
 postService
   ?.getAllPosts(userId)
   .then((result) => {
-    notifications.setUser(userId);
+   // notifications.setUser(userId);
     posts.value = result.data;
   })
   .catch((error) => console.log("error: " + error));
