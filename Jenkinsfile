@@ -16,7 +16,7 @@ pipeline{
                     sh "npm install"
                     sh "npm i @vue/cli-service"
                     sh "npm run build "
-                     sh "docker-compose --env-file config/Test.env build web"
+                    sh "docker-compose --env-file config/Test.env build web"
                 }
                 post{
                     always {
@@ -58,10 +58,11 @@ pipeline{
                             }
                      }
              }
-             stage("Deploy to production") {
+             stage("Push to registry") {
                          steps {
-                             sh "docker-compose --env-file config/Prod.env up -d"
+                             sh "docker-compose --env-file config/Test.env push"
                          }
+                  
                      }
      }
 }
