@@ -72,7 +72,7 @@ pipeline{
                     failure {
                         sh "echo 'Pushing to registry failed'"
                     }
-                }
+                   }
           }
      }
 }
