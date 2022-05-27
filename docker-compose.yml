@@ -2,12 +2,10 @@ version: "3.3"
 
 services:
   web:
-    build:
-      context: .
-    image: "localhost:3000/travelblog_web:${IMAGE_TAG}"
+    build: .
     container_name: "${CONT_NAME}"
     ports:
       - "${API_PORT}:80"
     environment:
-          - API_URL=${API_URL}
+      - API_URL=${API_URL}
 
