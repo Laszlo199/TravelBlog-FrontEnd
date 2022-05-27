@@ -42,7 +42,7 @@ pipeline{
                 }
               }
 
-             stage("Deploy") {
+             stage("Deploy to testing") {
                        steps{
                            sh "docker-compose --env-file config/Test.env up -d"
                        }
@@ -58,21 +58,10 @@ pipeline{
                             }
                      }
              }
-             stage("Push to registry") {
-                steps {
-                    sh "docker-compose --env-file config/Test.env push"
-                }
-                post{
-                    always {
-                        sh "echo 'Pushing to registry finished'"
-                    }
-                    success {
-                        sh "echo 'Pushing to registry succeeded'"
-                    }
-                    failure {
-                        sh "echo 'Pushing to registry failed'"
-                    }
-                   }
-          }
+             stage("Deploy to production") {
+                         steps {
+                             sh "docker-compose --env-file config/Prod.env up -d"
+                         }
+                     }
      }
 }
